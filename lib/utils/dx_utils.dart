@@ -92,7 +92,7 @@ TextButton getTextButton({
 //       height: height ?? 1);
 // }
 
-class BaseUtils {
+class DXUtils {
   static T? getController<T extends GetxController>() {
     if (Get.isRegistered<T>())
       return Get.find<T>();
@@ -152,7 +152,7 @@ class BaseUtils {
 
   static copyText(String text, {String tips = '複製成功'}) {
     Clipboard.setData(ClipboardData(text: text));
-    BaseUtils.showToast(tips);
+    DXUtils.showToast(tips);
   }
 
   //21-5  统一阴影边框

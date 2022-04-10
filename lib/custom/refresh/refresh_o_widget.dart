@@ -10,7 +10,7 @@ class RefreshOController extends BaseRefreshController {
 
   RefreshOController({
     required String url,
-    required BaseHttp http,
+    required DXHttp http,
     required this.successBuild,
     RequestMethod method = RequestMethod.GET,
     Map<String, dynamic> params = const {},

@@ -21,7 +21,7 @@ abstract class BaseRefreshController extends CacheController
   static set baseHeader(Widget? baseHeader) => baseHeaderWidget = baseHeader;
 
   final String url;
-  final BaseHttp http;
+  final DXHttp http;
   final bool isList;
   Map<String, dynamic> params;
   RequestMethod method;

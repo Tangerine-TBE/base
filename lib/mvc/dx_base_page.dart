@@ -19,6 +19,6 @@ abstract class BasePage<T extends BaseController> {
   }
 
   void _init(BuildContext context) {
-    mColors = context.colors;
+    // mColors = context.colors;
   }
 }

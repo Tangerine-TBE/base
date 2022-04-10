@@ -10,7 +10,7 @@ typedef OnError = Function(String msg, int code);
 
 enum RequestMethod { GET, POST, PUT, DELETE, DOWNLOAD, FORM_DATA }
 
-class NetWorkConfig {
+class DXHttpConfig {
   Map<String, String> baseHeader;
   List<Interceptor> interceptors;
   int successCode; //成功code
@@ -22,11 +22,12 @@ class NetWorkConfig {
   bool isIgnoreSSL; //是否忽略ssl验证
   bool isProxy; //是否设置代理
   String proxyAddress; //代理地址
+  String proxyHost; //代理端口号
   String baseUrl;
   String msgStr;
   String codeStr;
 
-  NetWorkConfig(
+  DXHttpConfig(
     this.baseUrl, {
     this.successCode = 200,
     this.listEmptyCode = 400,
@@ -39,6 +40,7 @@ class NetWorkConfig {
     this.isIgnoreSSL = true,
     this.isProxy = true,
     this.proxyAddress = "",
+    this.proxyHost = "",
     this.msgStr = "msg",
     this.codeStr = "code",
   });
@@ -56,38 +58,96 @@ class ResponseBean {
   ResponseBean(this.isSuccess, this.map, {this.isCache = false});
 }
 
-///example:
-/// class MerHttp extends BaseHttp {
-///   static bool ignoreSign = false;
-///
-///   static MerHttp _instance = MerHttp._init();
-///
-///   factory MerHttp.instance() => _instance;
-///
-///   MerHttp._init() {
-///     super.init();
-///   }
-///
-///   NetWorkConfig initConfig() => NetWorkConfig('http://www.baidu.con',
-///     isProxy: true,
-///     proxyAddress: "192.168.x.x",
-///     successCode: 200,
-///     codeStr: 'code',
-///     msgStr: "message",
-///     isPrintLog: false,
-///     baseHeader: {
-///       "signType": "MD5",
-///       "clientId": "1",
-///     },);
-/// }
-///
+// callBack方式
+// void callBack() {
+//   DemoHttp.instance().requestOnCallBack(
+//     path: 'path', //required
+//     onSuccess: (Map<String, dynamic> map) {}, //成功回调，required
+//     params: {},
+//     method: RequestMethod.POST, //callback:default=POST
+//     onError: (String msg, int code) {}, //错误回调
+//     isShowLoading: true, //是否展示loading,callback:default=true
+//     isNeedSave: false, //是否需要缓存,callback:default=false
+//     isErrorToast: true,//onError是否自动弹msg Toast,default=true
+//     // formData:  //post表单上传文件
+//   );
+// }
+
+void stream() {
+  var stream = DemoHttp.instance().requestOnStream(
+    path: 'path',
+    params: {},
+    method: RequestMethod.GET, //Stream:default=GET
+    isNeedCache: true, //Stream:default=true
+  );
+  StreamBuilder<ResponseBean>(
+    stream: stream,
+    builder: (context, snapshot) {
+      //请求成功Widget
+      if (snapshot.connectionState == ConnectionState.done &&
+          snapshot.data != null) {
+        var map = snapshot.data!.map;
+        return Container();
+      }
+      return Container();
+    },
+  );
+}
+
+//example:
+class DemoHttp extends DXHttp {
+  ///实现单例
+  static DemoHttp _instance = DemoHttp._init();
+
+  factory DemoHttp.instance() => _instance;
+
+  DemoHttp._init() {
+    super.init();
+  }
+
+  ///初始配置
+  @override
+  DXHttpConfig initConfig() => DXHttpConfig(
+        'http://www.baidu.con', //请求域名
+        isProxy: true,
+        //是否设置代理
+        proxyAddress: "192.168.x.x",
+        //设置请求代理地址
+        proxyHost: "8888",
+        //设置请求代理端口号
+        successCode: 200,
+        //response--请求成功code
+        codeStr: 'code',
+        //response--解析code key
+        msgStr: "message",
+        //response--解析message key
+        isPrintLog: false,
+        //debug是否打印请求日志
+        baseHeader: {},
+        //默认请求头
+        interceptors: [], //请求拦截器
+      );
+
+  ///显示加载弹窗
+  @override
+  void showLoading() {}
+
+  ///关闭加载弹窗
+  @override
+  void dismissLoading() {}
+
+  ///统一onError处理
+  @override
+  void customError(String msg, int code, bool isErrorToast) {}
+}
+
 ///BaseHttp：可存在多个不同API，各自继承抽象类，initConfig()返回NetWorkConfig 各API参数配置。
-abstract class BaseHttp {
+abstract class DXHttp {
   static const NETWORK_CACHE = "network_cache";
 
-  late NetWorkConfig mNetWorkConfig;
+  late DXHttpConfig mNetWorkConfig;
 
-  NetWorkConfig initConfig();
+  DXHttpConfig initConfig();
 
   /// 加载弹窗
   void showLoading() {}
@@ -96,9 +156,6 @@ abstract class BaseHttp {
 
   ///定制错误处理
   void customError(String msg, int code, bool isErrorToast) {}
-
-  ///添加公共请求头
-  Map<String, dynamic> addPublicHeader();
 
   CancelToken _cancelToken = CancelToken();
 
@@ -130,7 +187,7 @@ abstract class BaseHttp {
       //代理
       if (mNetWorkConfig.isProxy)
         client.findProxy = (uri) {
-          return "PROXY ${mNetWorkConfig.proxyAddress}";
+          return "PROXY ${mNetWorkConfig.proxyAddress}:${mNetWorkConfig.proxyHost}";
         };
     };
   }
@@ -156,8 +213,10 @@ abstract class BaseHttp {
   }
 
   ///callBack请求，onSuccess必传，默认post+show loading ,
-  void requestOnCallBack(String path, OnSuccess onSuccess,
-      {Map<String, dynamic>? params,
+  void requestOnCallBack(
+      {required String path,
+      required OnSuccess onSuccess,
+      Map<String, dynamic>? params,
       RequestMethod method = RequestMethod.POST,
       OnError? onError,
       Map<String, dynamic> header = const {},
@@ -193,8 +252,9 @@ abstract class BaseHttp {
   }
 
   ///Stream请求，默认 get + cache ,配合StreamBuild 使用
-  Stream<ResponseBean> requestOnStream(String path,
-      {Map<String, dynamic>? params,
+  Stream<ResponseBean> requestOnStream(
+      {required String path,
+      Map<String, dynamic>? params,
       RequestMethod method = RequestMethod.GET,
       Map<String, dynamic> header = const {},
       bool isNeedCache = true,
@@ -255,7 +315,7 @@ abstract class BaseHttp {
       CancelToken? cancelToken}) async {
     if (header.length > 0) _dio.options.headers.addAll(header);
     _dio.options.receiveTimeout = mNetWorkConfig.receiveTimeout;
-    _dio.options.headers.addAll(addPublicHeader());
+    // _dio.options.headers.addAll(addPublicHeader());
     Map<String, dynamic> map;
     try {
       Response<String> response;
@@ -355,4 +415,3 @@ abstract class BaseHttp {
     return paramsStr;
   }
 }
-

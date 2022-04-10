@@ -1,5 +1,5 @@
 import 'package:dx_plugin/custom/refresh/refresh_base_controller.dart';
-import 'package:dx_plugin/network/base_http.dart';
+import 'package:dx_plugin/network/dx_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:get/get.dart';
@@ -46,7 +46,7 @@ class RefreshLController<T> extends BaseRefreshController {
 
   RefreshLController({
     required String url,
-    required BaseHttp http,
+    required DXHttp http,
     required this.mapToList,
     required this.itemWidgetBuilder,
     RequestMethod method = RequestMethod.GET,
