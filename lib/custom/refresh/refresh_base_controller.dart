@@ -17,7 +17,6 @@ abstract class BaseRefreshController extends CacheController
 
   Widget? get getBaseHeader => baseHeaderWidget;
 
-
   static set baseHeader(Widget? baseHeader) => baseHeaderWidget = baseHeader;
 
   final String url;
@@ -60,7 +59,7 @@ abstract class BaseRefreshController extends CacheController
 
   Stream<ResponseBean> getStream() {
     return http.requestOnStream(
-      url,
+      path: url,
       params: params,
       method: method,
       isNeedCache: isNeedCache,

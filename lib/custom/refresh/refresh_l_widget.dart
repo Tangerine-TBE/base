@@ -115,8 +115,8 @@ class RefreshLController<T> extends BaseRefreshController {
     _currentPage++;
     params[pageStr] = _currentPage;
     http.requestOnCallBack(
-      url,
-      (map) => parseMap(map),
+      path: url,
+      onSuccess: (map) => parseMap(map),
       onError: (msg, code) => onCallRequestError(code),
       isErrorToast: false,
       isShowLoading: false,
