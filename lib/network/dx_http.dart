@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dx_plugin/network/dx_http_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dx_plugin/dx_plugin.dart' as DX;
 
@@ -10,46 +11,7 @@ typedef OnError = Function(String msg, int code);
 
 enum RequestMethod { GET, POST, PUT, DELETE, DOWNLOAD, FORM_DATA }
 
-class DXHttpConfig {
-  Map<String, String> baseHeader;
-  List<Interceptor> interceptors;
-  int successCode; //成功code
-  int listEmptyCode; //请求列表为空Code
-  int connectTimeout; //连接超时时间
-  int receiveTimeout; //接收超时时间
-  int sendTimeout; //发送数据超时时间
-  bool isPrintLog; //是否输出日志
-  bool isIgnoreSSL; //是否忽略ssl验证
-  bool isProxy; //是否设置代理
-  String proxyAddress; //代理地址
-  String proxyHost; //代理端口号
-  String baseUrl;
-  String msgStr;
-  String codeStr;
-
-  DXHttpConfig(
-    this.baseUrl, {
-    this.successCode = 200,
-    this.listEmptyCode = 400,
-    this.baseHeader = const {},
-    this.interceptors = const [],
-    this.connectTimeout = 30000,
-    this.receiveTimeout = 30000,
-    this.sendTimeout = 30000,
-    this.isPrintLog = false,
-    this.isIgnoreSSL = true,
-    this.isProxy = true,
-    this.proxyAddress = "",
-    this.proxyHost = "",
-    this.msgStr = "msg",
-    this.codeStr = "code",
-  });
-
-  OnError defaultError = (msg, code) {
-    //showToast
-  };
-}
-
+///Stream方式返回对象
 class ResponseBean {
   bool isSuccess;
   bool isCache;
@@ -58,94 +20,15 @@ class ResponseBean {
   ResponseBean(this.isSuccess, this.map, {this.isCache = false});
 }
 
-// callBack方式
-// void callBack() {
-//   DemoHttp.instance().requestOnCallBack(
-//     path: 'path', //required
-//     onSuccess: (Map<String, dynamic> map) {}, //成功回调，required
-//     params: {},
-//     method: RequestMethod.POST, //callback:default=POST
-//     onError: (String msg, int code) {}, //错误回调
-//     isShowLoading: true, //是否展示loading,callback:default=true
-//     isNeedSave: false, //是否需要缓存,callback:default=false
-//     isErrorToast: true,//onError是否自动弹msg Toast,default=true
-//     // formData:  //post表单上传文件
-//   );
-// }
-
-void stream() {
-  var stream = DemoHttp.instance().requestOnStream(
-    path: 'path',
-    params: {},
-    method: RequestMethod.GET, //Stream:default=GET
-    isNeedCache: true, //Stream:default=true
-  );
-  StreamBuilder<ResponseBean>(
-    stream: stream,
-    builder: (context, snapshot) {
-      //请求成功Widget
-      if (snapshot.connectionState == ConnectionState.done &&
-          snapshot.data != null) {
-        var map = snapshot.data!.map;
-        return Container();
-      }
-      return Container();
-    },
-  );
-}
-
-//example:
-class DemoHttp extends DXHttp {
-  ///实现单例
-  static DemoHttp _instance = DemoHttp._init();
-
-  factory DemoHttp.instance() => _instance;
-
-  DemoHttp._init() {
-    super.init();
-  }
-
-  ///初始配置
-  @override
-  DXHttpConfig initConfig() => DXHttpConfig(
-        'http://www.baidu.con', //请求域名
-        isProxy: true,
-        //是否设置代理
-        proxyAddress: "192.168.x.x",
-        //设置请求代理地址
-        proxyHost: "8888",
-        //设置请求代理端口号
-        successCode: 200,
-        //response--请求成功code
-        codeStr: 'code',
-        //response--解析code key
-        msgStr: "message",
-        //response--解析message key
-        isPrintLog: false,
-        //debug是否打印请求日志
-        baseHeader: {},
-        //默认请求头
-        interceptors: [], //请求拦截器
-      );
-
-  ///显示加载弹窗
-  @override
-  void showLoading() {}
-
-  ///关闭加载弹窗
-  @override
-  void dismissLoading() {}
-
-  ///统一onError处理
-  @override
-  void customError(String msg, int code, bool isErrorToast) {}
-}
-
-///BaseHttp：可存在多个不同API，各自继承抽象类，initConfig()返回NetWorkConfig 各API参数配置。
+///BaseHttp：可存在多个不同API，各自继承抽象类，initConfig()返回NetWorkConfig 各API参数配置。(缺Future方式)
+///callBack/stream -> _request
+///缓存规则：K-V缓存数据。key =_networkCacheKey,value<Map>;
+///Map-key=Url+params key排序后 key+value.默认总共缓存五十条数据
 abstract class DXHttp {
-  static const NETWORK_CACHE = "network_cache";
+  final String _networkCacheKey = "network_cache";
+  String logTitle = "--------DXHttp--------";
 
-  late DXHttpConfig mNetWorkConfig;
+  late DXHttpConfig _netWorkConfig;
 
   DXHttpConfig initConfig();
 
@@ -155,61 +38,48 @@ abstract class DXHttp {
   void dismissLoading() {}
 
   ///定制错误处理
-  void customError(String msg, int code, bool isErrorToast) {}
+  void defaultError(String msg, int code, bool isErrorToast, OnError? onError);
 
   CancelToken _cancelToken = CancelToken();
 
   late Dio _dio;
 
-  init() {
-    mNetWorkConfig = initConfig();
+  ///debug打印日志
+  void _debugPrintLog(String log) {
+    if (_netWorkConfig.isDebugPrint) debugPrint("$logTitle$log");
+  }
+
+  ///初始化
+  void init() {
+    _debugPrintLog('init');
+    _netWorkConfig = initConfig();
     //全局参数
     BaseOptions options = BaseOptions(
-        connectTimeout: mNetWorkConfig.connectTimeout,
-        receiveTimeout: mNetWorkConfig.receiveTimeout,
-        sendTimeout: mNetWorkConfig.sendTimeout,
-        headers: mNetWorkConfig.baseHeader,
-        baseUrl: mNetWorkConfig.baseUrl);
+        connectTimeout: _netWorkConfig.connectTimeout,
+        receiveTimeout: _netWorkConfig.receiveTimeout,
+        sendTimeout: _netWorkConfig.sendTimeout,
+        headers: _netWorkConfig.baseHeader,
+        baseUrl: _netWorkConfig.baseUrl);
     _dio = Dio(options);
     //log输出
-    if (mNetWorkConfig.isPrintLog)
+    if (_netWorkConfig.isPrintLog)
       _dio.interceptors
         ..add(LogInterceptor(requestBody: true, responseBody: true));
     //拦截器
-    if (mNetWorkConfig.interceptors.length > 0)
-      _dio.interceptors..addAll(mNetWorkConfig.interceptors);
+    if (_netWorkConfig.interceptors.length > 0)
+      _dio.interceptors..addAll(_netWorkConfig.interceptors);
     //SSL证书
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
-      if (mNetWorkConfig.isIgnoreSSL)
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
+      //忽略SSL验证--待封装SSL证书
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
       //代理
-      if (mNetWorkConfig.isProxy)
+      if (_netWorkConfig.isProxy)
         client.findProxy = (uri) {
-          return "PROXY ${mNetWorkConfig.proxyAddress}:${mNetWorkConfig.proxyHost}";
+          return "PROXY ${_netWorkConfig.proxyAddress}:${_netWorkConfig.proxyHost}";
         };
     };
-  }
-
-  ///简易下载文件，待封装
-  void downFile(String path, String savePath, OnSuccess onSuccess,
-      {ProgressCallback? onReceiveProgress, OnError? onError}) async {
-    try {
-      _dio.options.receiveTimeout = 0;
-      var response = await _dio.download(path, savePath,
-          onReceiveProgress: onReceiveProgress);
-      if (response.statusCode == 200) {
-        onSuccess({});
-      } else if (onError != null) {
-        onError('下载失败', 500);
-      }
-    } catch (e) {
-      print("network_error");
-      print("${e.toString()}");
-      var map = {mNetWorkConfig.msgStr: "網絡錯誤", mNetWorkConfig.codeStr: 404};
-      _onError(map, onError: onError);
-    }
   }
 
   ///callBack请求，onSuccess必传，默认post+show loading ,
@@ -221,12 +91,12 @@ abstract class DXHttp {
       OnError? onError,
       Map<String, dynamic> header = const {},
       bool isShowLoading = true,
-      bool isNeedSave = false,
+      bool isNeedCache = false,
       bool isErrorToast = true,
       FormData? formData,
       CancelToken? cancelToken}) async {
     var baseUrl = _dio.options.baseUrl;
-    if (baseUrl.isNullOrEmpty) _dio.options.baseUrl = mNetWorkConfig.baseUrl;
+    if (baseUrl.isNullOrEmpty) _dio.options.baseUrl = _netWorkConfig.baseUrl;
 
     ///post 默认show loading
     if (isShowLoading) showLoading();
@@ -236,11 +106,11 @@ abstract class DXHttp {
         header: header,
         formData: formData,
         cancelToken: cancelToken);
-    print("map=$map");
+    _debugPrintLog('request=$map');
     if (isShowLoading) dismissLoading(); //dismiss
     ResponseBean bean = _parseResponse(map);
     if (bean.isSuccess) {
-      if (isNeedSave) {
+      if (isNeedCache) {
         var cacheKey = _getCacheKey(path, params: params);
         var cacheMap = _getCacheMap();
         _setCache(cacheMap, cacheKey, map);
@@ -268,7 +138,7 @@ abstract class DXHttp {
       cacheKey = _getCacheKey(path, params: params);
       cacheMap = _getCacheMap();
       if (cacheMap[cacheKey] != null) {
-        debugPrint("cacheMap================");
+        _debugPrintLog('get_cache');
         yield ResponseBean(true, cacheMap[cacheKey]);
       }
     }
@@ -284,29 +154,14 @@ abstract class DXHttp {
       yield bean;
     } else {
       _onError(bean.map, isErrorToast: isErrorToast);
+      //onError是否返回Bean
       if (isErrorReturn) yield bean;
     }
   }
 
-  ResponseBean _parseResponse(Map<String, dynamic> map) {
-    var successCode = mNetWorkConfig.successCode;
-    var code = map[mNetWorkConfig.codeStr];
-    return ResponseBean(code == successCode, map);
-  }
-
-  ///错误处理
-  void _onError(Map<String, dynamic> map,
-      {OnError? onError, bool isErrorToast = true}) {
-    debugPrint("_onError==========${onError == null}");
-    var msg = map[mNetWorkConfig.msgStr] as String?;
-    //resultErrorCode  統一處理
-    customError(msg ?? "", map[mNetWorkConfig.codeStr], isErrorToast);
-    if (!msg.isNullOrEmpty) {
-      onError = onError ?? mNetWorkConfig.defaultError;
-      onError(msg!, map[mNetWorkConfig.codeStr]);
-    }
-  }
-
+  ///请求方法：callBack/stream调用，暂实现:GET、POST、POST_FORM_DATA,PUT
+  ///method==post,formData不为空为表单上传
+  ///return:map
   Future<Map<String, dynamic>> _request(String path,
       {Map<String, dynamic>? params,
       RequestMethod method = RequestMethod.GET,
@@ -314,9 +169,11 @@ abstract class DXHttp {
       FormData? formData,
       CancelToken? cancelToken}) async {
     if (header.length > 0) _dio.options.headers.addAll(header);
-    _dio.options.receiveTimeout = mNetWorkConfig.receiveTimeout;
-    // _dio.options.headers.addAll(addPublicHeader());
-    Map<String, dynamic> map;
+    //reset接收时间，下载时设为0,不限制。
+    if (_dio.options.receiveTimeout != _netWorkConfig.receiveTimeout) {
+      _dio.options.receiveTimeout = _netWorkConfig.receiveTimeout;
+    }
+    Map<String, dynamic> map = {};
     try {
       Response<String> response;
       switch (method) {
@@ -343,51 +200,81 @@ abstract class DXHttp {
               data: params, cancelToken: cancelToken ?? _cancelToken);
           break;
       }
-      debugPrint("success================");
+      _debugPrintLog('success');
       map = jsonDecode(response.data!);
     } catch (e) {
-      ///error封装，待进一步完善，自定义code,在parseResponse()处理
-      map = {mNetWorkConfig.codeStr: -1, mNetWorkConfig.msgStr: "未知错误"};
-      if (e is DioError) _setErrorJson(e, map);
-      print('2=${e.toString()}');
+      _setCatchError(e, map);
     }
     return map;
   }
 
-  ///设置request error Json
-  void _setErrorJson(DioError e, Map<String, dynamic> map) {
-    // print("_setErrorJson========${e.type}");
-    switch (e.type) {
-      case DioErrorType.cancel:
-        map[mNetWorkConfig.msgStr] = "請求取消";
-        break;
-      case DioErrorType.connectTimeout:
-        map[mNetWorkConfig.msgStr] = "連接超時";
-        break;
-      case DioErrorType.sendTimeout:
-        map[mNetWorkConfig.msgStr] = "請求超時";
-        break;
-      case DioErrorType.receiveTimeout:
-        map[mNetWorkConfig.msgStr] = "響應超時";
-        break;
-      case DioErrorType.response:
-        break;
-      case DioErrorType.other:
-        map[mNetWorkConfig.msgStr] = "網絡異常";
-        break;
-    }
+  ResponseBean _parseResponse(Map<String, dynamic> map) {
+    var successCode = _netWorkConfig.successCode;
+    var code = map[_netWorkConfig.codeStr];
+    return ResponseBean(code == successCode, map);
   }
 
-  ///缓存机制：默认Get请求配合StreamBuild使用，MMKV+Map缓存数据，只存success请求，默认50条
+  ///错误处理
+  void _onError(Map<String, dynamic> map,
+      {OnError? onError, bool isErrorToast = true}) {
+    debugPrint("_onError==========${onError == null}");
+    var msg = (map[_netWorkConfig.msgStr] as String?) ?? '';
+    defaultError(msg, map[_netWorkConfig.codeStr], isErrorToast, onError);
+  }
+
+  ///设置catch捕捉到的dioError,config.getErrorMsg 处理
+  void _setCatchError(dynamic e, Map<String, dynamic> map) {
+    var config = _netWorkConfig;
+    String msg = '';
+    int code;
+    if (!e is DioError) {
+      msg = '';
+      code = -1;
+    } else {
+      e as DioError;
+      _debugPrintLog('catch_error,type=${e.type}\n msg=${e.message}');
+      if (config.onCatchError != null) {
+        var tuple = config.onCatchError!.call(e.type);
+        code = tuple.item1;
+        msg = tuple.item2;
+      } else {
+        code = -1;
+        switch (e.type) {
+          case DioErrorType.cancel:
+            msg = "請求取消";
+            break;
+          case DioErrorType.connectTimeout:
+            msg = "連接超時";
+            break;
+          case DioErrorType.sendTimeout:
+            msg = "請求超時";
+            break;
+          case DioErrorType.receiveTimeout:
+            msg = "響應超時";
+            break;
+          case DioErrorType.response:
+            msg = "響應报文异常";
+            break;
+          case DioErrorType.other:
+            msg = "網絡異常";
+            break;
+        }
+      }
+    }
+    map = {_netWorkConfig.codeStr: code, _netWorkConfig.msgStr: msg};
+  }
+
+  ///缓存机制：默认Get请求配合StreamBuild使用，只存success请求，map缓存，默认50条
   ///存缓存数据
   void _setCache(
     Map<String, dynamic> cacheMap,
     String paramsStr,
     Map<String, dynamic> map,
   ) {
-    var kvKey = NETWORK_CACHE + mNetWorkConfig.baseUrl;
+    var kvKey = _networkCacheKey + _netWorkConfig.baseUrl;
     if (cacheMap.containsKey(paramsStr)) cacheMap.remove(paramsStr);
-    if (cacheMap.length > 50) cacheMap.remove(cacheMap.keys.first);
+    if (cacheMap.length > _netWorkConfig.cacheSum)
+      cacheMap.remove(cacheMap.keys.first);
     cacheMap[paramsStr] = map;
     DX.GetStorage().write(kvKey, jsonEncode(cacheMap));
   }
@@ -395,7 +282,7 @@ abstract class DXHttp {
   ///获取缓存map
   Map<String, dynamic> _getCacheMap() {
     var storage = DX.GetStorage();
-    var kvKey = NETWORK_CACHE + mNetWorkConfig.baseUrl;
+    var kvKey = _networkCacheKey + _netWorkConfig.baseUrl;
     var cacheString = storage.read<String>(kvKey);
     Map<String, dynamic> cacheMap =
         cacheString.isNullOrEmpty ? {} : jsonDecode(cacheString!);
@@ -407,11 +294,35 @@ abstract class DXHttp {
     var paramsStr = url;
     if (!params.isNullOrEmpty) {
       var kList = params!.keys.toList();
+      //排除忽略key
+      _netWorkConfig.ignoreKey.forEach((k) {
+        if (kList.contains(k)) kList.remove(k);
+      });
       kList.sort();
       kList.forEach((key) {
         paramsStr += key += params[key].toString();
       });
     }
     return paramsStr;
+  }
+
+  ///简易下载文件，待封装
+  void downFile(String path, String savePath, OnSuccess onSuccess,
+      {ProgressCallback? onReceiveProgress, OnError? onError}) async {
+    try {
+      _dio.options.receiveTimeout = 0;
+      var response = await _dio.download(path, savePath,
+          onReceiveProgress: onReceiveProgress);
+      if (response.statusCode == 200) {
+        onSuccess({});
+      } else if (onError != null) {
+        onError('下载失败', 500);
+      }
+    } catch (e) {
+      print("network_error");
+      print("${e.toString()}");
+      var map = {_netWorkConfig.msgStr: "網絡錯誤", _netWorkConfig.codeStr: 404};
+      _onError(map, onError: onError);
+    }
   }
 }
