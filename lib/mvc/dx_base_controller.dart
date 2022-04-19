@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dx_plugin/dx_plugin.dart';
 
-/// demo:
-class _DemoModel extends BaseModel<_DemoController> {
-  _DemoModel.fromController(_DemoController controller)
-      : super.fromController(controller);
-}
-
-class _DemoController extends BaseController<_DemoModel> {
-  @override
-  _DemoModel initModel() => _DemoModel.fromController(this);
-}
-
-abstract class BaseController<M extends BaseModel> extends GetxController {
+abstract class BaseController<M extends BaseModel> extends GetxController
+    with Dispose {
   late M model;
   AwareBean? _awareBean;
 
@@ -31,10 +21,14 @@ abstract class BaseController<M extends BaseModel> extends GetxController {
   ///onDelete 会回调onClose
   @override
   void onClose() {
-    model.onControllerClose();
+    model.mDispose();
+    mDispose();
     if (_awareBean != null) _unAwareSubscribe(_awareBean!.routeAware);
     super.onClose();
   }
+
+  @override
+  void mDispose() {}
 
   ///在controller onClose 关闭routeAware 订阅
   void _unAwareSubscribe(RouteAware routeAware) {
@@ -47,7 +41,7 @@ abstract class BaseController<M extends BaseModel> extends GetxController {
   }
 }
 
-abstract class BaseModel<C> {
+abstract class BaseModel<C> extends Dispose {
   late C controller;
 
   ///初始化 controller
@@ -56,10 +50,11 @@ abstract class BaseModel<C> {
   }
 
   ///初始化
-  void init() {}
+  void init();
 
-  ///controller 关闭回调--释放资源
-  void onControllerClose() {}
+  ///释放资源 -- controller onClose调用
+  @override
+  void mDispose() {}
 }
 
 class AwareBean {

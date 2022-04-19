@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:dx_plugin/dx_plugin.dart';
 
 abstract class BasePage<T extends BaseController> {
-  late ColorScheme mColors;
   late T mController;
+
+  ///子类调用
+  void initBasePage(BuildContext context);
 
   void initBase(T controller, BuildContext context) {
     mController = Get.put(controller);

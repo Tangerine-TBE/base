@@ -167,9 +167,9 @@ class RefreshLController<T> extends BaseRefreshController {
   }
 
   @override
-  void dispose() {
+  void mDispose() {
     onItemClean?.call(true);
-    super.dispose();
+    super.mDispose();
   }
 
   void setIsSuccess(bool success) {

@@ -3,7 +3,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dx_plugin/dx_plugin.dart';
 
 abstract class BaseRefreshController extends CacheController
-    with DisposeController {
+    with Dispose {
   ///base底部控件config--list使用
   static late FooterConfig? baseFooterConfig;
 
@@ -53,7 +53,7 @@ abstract class BaseRefreshController extends CacheController
   }
 
   @override
-  void dispose() {
+  void mDispose() {
     refreshController.dispose();
   }
 
