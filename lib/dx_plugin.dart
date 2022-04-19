@@ -1,6 +1,6 @@
 library dx_plugin;
 
-export 'utils/dx_utils.dart';
+// export 'utils/dx_utils.dart';
 export 'utils/image_utils.dart';
 export 'network/dx_http.dart';
 import 'package:dx_plugin/network/dx_http_config.dart';

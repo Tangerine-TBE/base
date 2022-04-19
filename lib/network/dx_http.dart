@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dx_plugin/network/dx_http_config.dart';
+import 'package:dx_plugin/utils/dx_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dx_plugin/dx_plugin.dart' as DX;
 

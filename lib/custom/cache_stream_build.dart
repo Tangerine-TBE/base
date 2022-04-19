@@ -1,3 +1,4 @@
+import 'package:dx_plugin/utils/dx_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:dx_plugin/dx_plugin.dart';
