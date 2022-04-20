@@ -175,7 +175,7 @@ abstract class DXHttp {
       do {
         map = await _dioRequest(
             path, params, method, cancelToken ?? _cancelToken);
-      } while (isRequestAgain());
+      } while (isRequestAgain(map));
     } catch (e) {
       _setCatchError(e, map);
     }
@@ -183,7 +183,7 @@ abstract class DXHttp {
   }
 
   ///是否需要重新请求
-  bool isRequestAgain() {
+  bool isRequestAgain(Map<String, dynamic> map) {
     return false;
   }
 
