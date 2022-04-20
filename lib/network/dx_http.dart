@@ -52,8 +52,8 @@ abstract class DXHttp {
 
   ///初始化
   void init() {
-    _debugPrintLog('init');
     _netWorkConfig = initConfig();
+    _debugPrintLog('init');
     //全局参数
     BaseOptions options = BaseOptions(
         connectTimeout: _netWorkConfig.connectTimeout,
