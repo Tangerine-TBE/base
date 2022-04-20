@@ -86,16 +86,16 @@ abstract class DXHttp {
   ///callBack请求，onSuccess必传，默认post+show loading ,
   void requestOnCallBack(
       {required String path,
-      required OnSuccess onSuccess,
-      Map<String, dynamic>? params,
-      RequestMethod method = RequestMethod.POST,
-      OnError? onError,
-      Map<String, dynamic> header = const {},
-      bool isShowLoading = true,
-      bool isErrorToast = true,
-      bool isNeedBack = false,
-      FormData? formData,
-      CancelToken? cancelToken}) async {
+        required OnSuccess onSuccess,
+        Map<String, dynamic>? params,
+        RequestMethod method = RequestMethod.POST,
+        OnError? onError,
+        Map<String, dynamic> header = const {},
+        bool isShowLoading = true,
+        bool isErrorToast = true,
+        bool isNeedBack = false,
+        FormData? formData,
+        CancelToken? cancelToken}) async {
     var baseUrl = _dio.options.baseUrl;
     if (baseUrl.isNullOrEmpty) _dio.options.baseUrl = _netWorkConfig.baseUrl;
 
@@ -120,14 +120,14 @@ abstract class DXHttp {
   ///Stream请求，默认 get + cache ,配合StreamBuild 使用
   Stream<ResponseBean> requestOnStream(
       {required String path,
-      Map<String, dynamic>? params,
-      RequestMethod method = RequestMethod.GET,
-      Map<String, dynamic> header = const {},
-      bool isNeedCache = true,
-      bool isErrorReturn = true,
-      bool isNeedBack = true,
-      bool isErrorToast = true,
-      CancelToken? cancelToken}) async* {
+        Map<String, dynamic>? params,
+        RequestMethod method = RequestMethod.GET,
+        Map<String, dynamic> header = const {},
+        bool isNeedCache = true,
+        bool isErrorReturn = true,
+        bool isNeedBack = true,
+        bool isErrorToast = true,
+        CancelToken? cancelToken}) async* {
     ///get 默认添加缓存
     String? cacheKey;
     Map<String, dynamic>? cacheMap;
@@ -161,10 +161,10 @@ abstract class DXHttp {
   ///return:map
   Future<Map<String, dynamic>> _request(String path,
       {Map<String, dynamic>? params,
-      RequestMethod method = RequestMethod.GET,
-      Map<String, dynamic> header = const {},
-      FormData? formData,
-      CancelToken? cancelToken}) async {
+        RequestMethod method = RequestMethod.GET,
+        Map<String, dynamic> header = const {},
+        FormData? formData,
+        CancelToken? cancelToken}) async {
     if (header.length > 0) _dio.options.headers.addAll(header);
     //reset接收时间，下载时设为0,不限制。
     if (_dio.options.receiveTimeout != _netWorkConfig.receiveTimeout) {
@@ -177,7 +177,7 @@ abstract class DXHttp {
             path, params, method, cancelToken ?? _cancelToken);
       } while (isRequestAgain(map));
     } catch (e) {
-      _setCatchError(e, map);
+      _setCatchError(e as DioError, map);
     }
     return map;
   }
@@ -189,12 +189,12 @@ abstract class DXHttp {
 
   ///dio--request请求
   Future<Map<String, dynamic>> _dioRequest(
-    String path,
-    Map<String, dynamic>? params,
-    RequestMethod method,
-    CancelToken cancelToken, {
-    FormData? formData,
-  }) async {
+      String path,
+      Map<String, dynamic>? params,
+      RequestMethod method,
+      CancelToken cancelToken, {
+        FormData? formData,
+      }) async {
     Response<String> response;
     switch (method) {
       case RequestMethod.GET:
@@ -204,10 +204,10 @@ abstract class DXHttp {
       case RequestMethod.POST:
         if (formData != null) {
           response =
-              await _dio.post(path, data: formData, cancelToken: cancelToken);
+          await _dio.post(path, data: formData, cancelToken: cancelToken);
         } else {
           response =
-              await _dio.post(path, data: params, cancelToken: cancelToken);
+          await _dio.post(path, data: params, cancelToken: cancelToken);
         }
         break;
       case RequestMethod.PUT:
@@ -215,7 +215,7 @@ abstract class DXHttp {
         break;
       default:
         response =
-            await _dio.post(path, data: params, cancelToken: cancelToken);
+        await _dio.post(path, data: params, cancelToken: cancelToken);
         break;
     }
     _debugPrintLog('success');
@@ -233,46 +233,41 @@ abstract class DXHttp {
       {OnError? onError, bool isErrorToast = true,bool isNeedBack = false}) {
     debugPrint("_onError==========${onError == null}");
     var msg = (map[_netWorkConfig.msgStr] as String?) ?? '';
-    defaultError(msg, map[_netWorkConfig.codeStr], isErrorToast, onError,isNeedBack);
+    var code = (map[_netWorkConfig.codeStr] as int?) ?? -1;
+    defaultError(msg, code, isErrorToast, onError,isNeedBack);
   }
 
   ///设置catch捕捉到的dioError,config.getErrorMsg 处理
-  void _setCatchError(dynamic e, Map<String, dynamic> map) {
+  void _setCatchError(DioError e, Map<String, dynamic> map) {
     var config = _netWorkConfig;
     String msg = '';
-    int code;
-    if (!e is DioError) {
-      msg = '';
-      code = -1;
+    int code = -1;
+    _debugPrintLog('catch_error,type=${e.type}\n msg=${e.message}');
+    if (config.onCatchError != null) {
+      var tuple = config.onCatchError!.call(e.type);
+      code = tuple.item1;
+      msg = tuple.item2;
     } else {
-      e as DioError;
-      _debugPrintLog('catch_error,type=${e.type}\n msg=${e.message}');
-      if (config.onCatchError != null) {
-        var tuple = config.onCatchError!.call(e.type);
-        code = tuple.item1;
-        msg = tuple.item2;
-      } else {
-        code = -1;
-        switch (e.type) {
-          case DioErrorType.cancel:
-            msg = "請求取消";
-            break;
-          case DioErrorType.connectTimeout:
-            msg = "連接超時";
-            break;
-          case DioErrorType.sendTimeout:
-            msg = "請求超時";
-            break;
-          case DioErrorType.receiveTimeout:
-            msg = "響應超時";
-            break;
-          case DioErrorType.response:
-            msg = "響應报文异常";
-            break;
-          case DioErrorType.other:
-            msg = "網絡異常";
-            break;
-        }
+      code = -1;
+      switch (e.type) {
+        case DioErrorType.cancel:
+          msg = "請求取消";
+          break;
+        case DioErrorType.connectTimeout:
+          msg = "連接超時";
+          break;
+        case DioErrorType.sendTimeout:
+          msg = "請求超時";
+          break;
+        case DioErrorType.receiveTimeout:
+          msg = "響應超時";
+          break;
+        case DioErrorType.response:
+          msg = "響應报文异常";
+          break;
+        case DioErrorType.other:
+          msg = "網絡異常";
+          break;
       }
     }
     map = {_netWorkConfig.codeStr: code, _netWorkConfig.msgStr: msg};
@@ -281,10 +276,10 @@ abstract class DXHttp {
   ///缓存机制：默认Get请求配合StreamBuild使用，只存success请求，map缓存，默认50条
   ///存缓存数据
   void _setCache(
-    Map<String, dynamic> cacheMap,
-    String paramsStr,
-    Map<String, dynamic> map,
-  ) {
+      Map<String, dynamic> cacheMap,
+      String paramsStr,
+      Map<String, dynamic> map,
+      ) {
     var kvKey = _networkCacheKey + _netWorkConfig.baseUrl;
     if (cacheMap.containsKey(paramsStr)) cacheMap.remove(paramsStr);
     if (cacheMap.length > _netWorkConfig.cacheSum)
@@ -299,7 +294,7 @@ abstract class DXHttp {
     var kvKey = _networkCacheKey + _netWorkConfig.baseUrl;
     var cacheString = storage.read<String>(kvKey);
     Map<String, dynamic> cacheMap =
-        cacheString.isNullOrEmpty ? {} : jsonDecode(cacheString!);
+    cacheString.isNullOrEmpty ? {} : jsonDecode(cacheString!);
     return cacheMap;
   }
 
