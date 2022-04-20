@@ -51,7 +51,7 @@ abstract class BaseModel<C> extends Dispose {
   }
 
   ///初始化
-  void init();
+  void init() {}
 
   ///释放资源 -- controller onClose调用
   @override
