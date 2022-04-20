@@ -38,11 +38,12 @@ class DemoHttp extends DXHttp {
         ignoreKey :  const [], //缓存key--忽略的参数名
       );
 
-  ///统一onError处理
+  // ///统一onError处理
   @override
-  void defaultError(String msg, int code, bool isErrorToast, OnError? onError) {
+  void defaultError(String msg, int code, bool isErrorToast, OnError? onError, bool isNeedBack) {
     // showToast();
   }
+
 }
 
 class DemoRequest {
@@ -59,8 +60,6 @@ class DemoRequest {
       onError: (String msg, int code) {},
       //错误回调
       isShowLoading: true,
-      //是否展示loading,callback:default=true
-      isNeedCache: false,
       //是否需要缓存,callback:default=false
       isErrorToast: true, //onError是否自动弹msg Toast,default=true
       // formData:  //post表单上传文件

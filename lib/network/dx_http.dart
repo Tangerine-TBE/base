@@ -39,7 +39,7 @@ abstract class DXHttp {
   void dismissLoading() {}
 
   ///定制错误处理
-  void defaultError(String msg, int code, bool isErrorToast, OnError? onError);
+  void defaultError(String msg, int code, bool isErrorToast, OnError? onError,bool isNeedBack);
 
   CancelToken _cancelToken = CancelToken();
 
@@ -92,8 +92,8 @@ abstract class DXHttp {
       OnError? onError,
       Map<String, dynamic> header = const {},
       bool isShowLoading = true,
-      bool isNeedCache = false,
       bool isErrorToast = true,
+      bool isNeedBack = false,
       FormData? formData,
       CancelToken? cancelToken}) async {
     var baseUrl = _dio.options.baseUrl;
@@ -111,15 +111,10 @@ abstract class DXHttp {
     if (isShowLoading) dismissLoading(); //dismiss
     ResponseBean bean = _parseResponse(map);
     if (bean.isSuccess) {
-      if (isNeedCache) {
-        var cacheKey = _getCacheKey(path, params: params);
-        var cacheMap = _getCacheMap();
-        _setCache(cacheMap, cacheKey, map);
-      }
       onSuccess(bean.map);
       return;
     }
-    _onError(bean.map, onError: onError, isErrorToast: isErrorToast);
+    _onError(bean.map, onError: onError, isErrorToast: isErrorToast,isNeedBack: isNeedBack);
   }
 
   ///Stream请求，默认 get + cache ,配合StreamBuild 使用
@@ -130,6 +125,7 @@ abstract class DXHttp {
       Map<String, dynamic> header = const {},
       bool isNeedCache = true,
       bool isErrorReturn = true,
+      bool isNeedBack = true,
       bool isErrorToast = true,
       CancelToken? cancelToken}) async* {
     ///get 默认添加缓存
@@ -154,7 +150,7 @@ abstract class DXHttp {
       if (isNeedCache) _setCache(cacheMap!, cacheKey!, map);
       yield bean;
     } else {
-      _onError(bean.map, isErrorToast: isErrorToast);
+      _onError(bean.map, isErrorToast: isErrorToast,isNeedBack: isNeedBack);
       //onError是否返回Bean
       if (isErrorReturn) yield bean;
     }
@@ -176,37 +172,54 @@ abstract class DXHttp {
     }
     Map<String, dynamic> map = {};
     try {
-      Response<String> response;
-      switch (method) {
-        case RequestMethod.GET:
-          response = await _dio.get(path,
-              queryParameters: params,
-              cancelToken: cancelToken ?? _cancelToken);
-          break;
-        case RequestMethod.POST:
-          if (formData != null) {
-            response = await _dio.post(path,
-                data: formData, cancelToken: cancelToken ?? _cancelToken);
-          } else {
-            response = await _dio.post(path,
-                data: params, cancelToken: cancelToken ?? _cancelToken);
-          }
-          break;
-        case RequestMethod.PUT:
-          response = await _dio.put(path,
-              data: params, cancelToken: cancelToken ?? _cancelToken);
-          break;
-        default:
-          response = await _dio.post(path,
-              data: params, cancelToken: cancelToken ?? _cancelToken);
-          break;
-      }
-      _debugPrintLog('success');
-      map = jsonDecode(response.data!);
+      do {
+        map = await _dioRequest(
+            path, params, method, cancelToken ?? _cancelToken);
+      } while (isRequestAgain());
     } catch (e) {
       _setCatchError(e, map);
     }
     return map;
+  }
+
+  ///是否需要重新请求
+  bool isRequestAgain() {
+    return false;
+  }
+
+  ///dio--request请求
+  Future<Map<String, dynamic>> _dioRequest(
+    String path,
+    Map<String, dynamic>? params,
+    RequestMethod method,
+    CancelToken cancelToken, {
+    FormData? formData,
+  }) async {
+    Response<String> response;
+    switch (method) {
+      case RequestMethod.GET:
+        response = await _dio.get(path,
+            queryParameters: params, cancelToken: cancelToken);
+        break;
+      case RequestMethod.POST:
+        if (formData != null) {
+          response =
+              await _dio.post(path, data: formData, cancelToken: cancelToken);
+        } else {
+          response =
+              await _dio.post(path, data: params, cancelToken: cancelToken);
+        }
+        break;
+      case RequestMethod.PUT:
+        response = await _dio.put(path, data: params, cancelToken: cancelToken);
+        break;
+      default:
+        response =
+            await _dio.post(path, data: params, cancelToken: cancelToken);
+        break;
+    }
+    _debugPrintLog('success');
+    return jsonDecode(response.data!);
   }
 
   ResponseBean _parseResponse(Map<String, dynamic> map) {
@@ -217,10 +230,10 @@ abstract class DXHttp {
 
   ///错误处理
   void _onError(Map<String, dynamic> map,
-      {OnError? onError, bool isErrorToast = true}) {
+      {OnError? onError, bool isErrorToast = true,bool isNeedBack = false}) {
     debugPrint("_onError==========${onError == null}");
     var msg = (map[_netWorkConfig.msgStr] as String?) ?? '';
-    defaultError(msg, map[_netWorkConfig.codeStr], isErrorToast, onError);
+    defaultError(msg, map[_netWorkConfig.codeStr], isErrorToast, onError,isNeedBack);
   }
 
   ///设置catch捕捉到的dioError,config.getErrorMsg 处理
