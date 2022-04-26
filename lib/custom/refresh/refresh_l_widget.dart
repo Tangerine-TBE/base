@@ -1,3 +1,4 @@
+import 'package:dx_plugin/custom/load_builder/load_builder.dart';
 import 'package:dx_plugin/custom/refresh/refresh_base_controller.dart';
 import 'package:dx_plugin/network/dx_http.dart';
 import 'package:dx_plugin/utils/dx_utils.dart';
@@ -206,7 +207,7 @@ class RefreshLWidget<T> extends StatelessWidget {
             itemBuilder: controller.itemBuilder,
             itemCount: controller.itemLength.value);
       } else {
-        child = CacheStreamBuild(
+        child = LoadBuilder.formStream(
           getStream: controller.getStream,
           successBuild: successBuild,
           statusCallback: statusCallback,

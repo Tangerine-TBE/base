@@ -1,9 +1,10 @@
+import 'package:dx_plugin/custom/load_builder/load_builder.dart';
 import 'package:dx_plugin/utils/dx_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dx_plugin/dx_plugin.dart';
 
-abstract class BaseRefreshController extends CacheController
+abstract class BaseRefreshController extends BuilderController
     with Dispose {
   ///base底部控件config--list使用
   static late FooterConfig? baseFooterConfig;

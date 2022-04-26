@@ -1,3 +1,4 @@
+import 'package:dx_plugin/custom/load_builder/load_builder.dart';
 import 'package:dx_plugin/custom/refresh/refresh_base_controller.dart';
 import 'package:dx_plugin/dx_plugin.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,7 +48,7 @@ class RefreshOWidget extends StatelessWidget {
       footer: null,
       controller: controller.refreshController,
       onRefresh: controller.refresh,
-      child: CacheStreamBuild(
+      child: LoadBuilder.formStream(
         getStream: controller.getStream,
         successBuild: controller.successBuild,
         emptyStr: controller.emptyStr,
