@@ -31,7 +31,7 @@ class BuilderConfig {
 
 class LoadBuilder extends StatelessWidget {
   ///全局统一config
-  static late final BuilderConfig? _baseConfig;
+  static BuilderConfig? _baseConfig;
 
   static set baseConfig(BuilderConfig baseConfig) => _baseConfig = baseConfig;
 
@@ -149,8 +149,8 @@ class LoadBuilder extends StatelessWidget {
 
     return _getNeedRefresh()
         ? Obx(() {
-            return getBuilderWidget(sum: controller!.cacheRefreshSum.value);
-          })
+      return getBuilderWidget(sum: controller!.cacheRefreshSum.value);
+    })
         : getBuilderWidget();
   }
 
