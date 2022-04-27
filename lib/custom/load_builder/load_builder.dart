@@ -85,7 +85,7 @@ class LoadBuilder extends StatelessWidget {
   ///StreamBuilder 构造器--工厂模式
   factory LoadBuilder.formStream({
     required SuccessBuild successBuild,
-    required streamFun getStream,
+    required StreamFun getStream,
     String? emptyUrl,
     String? emptyStr,
     Function(NetworkStatus status)? statusCallback,

@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dx_plugin/utils/dx_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dx_plugin/dx_plugin.dart';
 
 enum ImageType { ASSET, FILE, SVG, NETWORK }
 
