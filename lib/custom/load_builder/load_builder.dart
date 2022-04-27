@@ -3,8 +3,8 @@ import 'package:dx_plugin/utils/dx_utils.dart';
 import 'package:flutter/material.dart';
 
 typedef SuccessBuild = Widget Function(Map<String, dynamic> map, bool isCache);
-typedef streamFun = Stream<ResponseBean> Function();
-typedef futureFun = Future<ResponseBean> Function();
+typedef StreamFun = Stream<ResponseBean> Function();
+typedef FutureFun = Future<ResponseBean> Function();
 
 enum NetworkStatus { SUCCESS, FAILED, EMPTY, LOADING }
 
@@ -135,22 +135,22 @@ class LoadBuilder extends StatelessWidget {
       return getChild(NetworkStatus.LOADING);
     };
     Widget getBuilderWidget({int? sum}) {
-      if (isFuture) {
-        return FutureBuilder(
-          future: getFuture!(),
-          builder: builder,
-        );
-      }
-      return StreamBuilder(
+      Widget child = isFuture
+          ? FutureBuilder(
+        future: getFuture!(),
+        builder: builder,
+      )
+          : StreamBuilder(
         stream: getStream!(),
         builder: builder,
       );
+      return child;
     }
 
     return _isNeedRefresh()
         ? Obx(() {
-            return getBuilderWidget(sum: controller!.cacheRefreshSum.value);
-          })
+      return getBuilderWidget(sum: controller!.cacheRefreshSum.value);
+    }).setRefreshIndicator(() => controller!.cacheRefresh())
         : getBuilderWidget();
   }
 
@@ -180,7 +180,6 @@ class LoadBuilder extends StatelessWidget {
             : Container(child: Text("默认加载widget").setCenter());
         break;
     }
-    if (_isNeedRefresh()) child.setRefreshIndicator(controller!.cacheRefresh);
     return child;
   }
 }
@@ -188,7 +187,7 @@ class LoadBuilder extends StatelessWidget {
 class BuilderController extends Dispose {
   var cacheRefreshSum = 0.obs;
 
-  Future cacheRefresh() async {
+  Future<void> cacheRefresh() async {
     cacheRefreshSum.value += 1;
   }
 
