@@ -23,7 +23,7 @@ class ImageConfig {
 ///圖片工具類
 ///app中初始化 ImageUtils.config
 class ImageUtils {
-  static late ImageConfig? _config;
+  static ImageConfig? _config;
 
   static set config(ImageConfig config) {
     _config = config;

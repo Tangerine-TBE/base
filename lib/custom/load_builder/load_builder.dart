@@ -37,8 +37,8 @@ class LoadBuilder extends StatelessWidget {
 
   ///自定义config
   final BuilderConfig? childConfig;
-  final streamFun? getStream;
-  final futureFun? getFuture;
+  final StreamFun? getStream;
+  final FutureFun? getFuture;
   final SuccessBuild successBuild;
   final String? emptyUrl;
   final String? emptyStr;
@@ -63,7 +63,7 @@ class LoadBuilder extends StatelessWidget {
   ///FutureBuilder 构造器--工厂模式
   factory LoadBuilder.formFuture({
     required SuccessBuild successBuild,
-    required futureFun getFuture,
+    required FutureFun getFuture,
     String? emptyUrl,
     String? emptyStr,
     Function(NetworkStatus status)? statusCallback,
