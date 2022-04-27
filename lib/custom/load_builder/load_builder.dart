@@ -106,8 +106,8 @@ class LoadBuilder extends StatelessWidget {
     );
   }
 
-  ///获取当前配置
-  bool _getNeedRefresh() => controller != null;
+  ///是否需要刷新
+  bool _isNeedRefresh() => controller != null;
 
   ///获取当前配置
   BuilderConfig _getConfig() =>
@@ -147,10 +147,10 @@ class LoadBuilder extends StatelessWidget {
       );
     }
 
-    return _getNeedRefresh()
+    return _isNeedRefresh()
         ? Obx(() {
-      return getBuilderWidget(sum: controller!.cacheRefreshSum.value);
-    })
+            return getBuilderWidget(sum: controller!.cacheRefreshSum.value);
+          })
         : getBuilderWidget();
   }
 
@@ -171,7 +171,7 @@ class LoadBuilder extends StatelessWidget {
         child = config.errorBuilder != null
             ? config.errorBuilder!()
             : Container(child: Text("默认错误widget,點擊重連").setCenter());
-        if (_getNeedRefresh())
+        if (_isNeedRefresh())
           child = child.setOnClickListener(() => controller!.cacheRefresh());
         break;
       case NetworkStatus.LOADING:
@@ -180,6 +180,7 @@ class LoadBuilder extends StatelessWidget {
             : Container(child: Text("默认加载widget").setCenter());
         break;
     }
+    if (_isNeedRefresh()) child.setRefreshIndicator(controller!.cacheRefresh);
     return child;
   }
 }
@@ -187,7 +188,7 @@ class LoadBuilder extends StatelessWidget {
 class BuilderController extends Dispose {
   var cacheRefreshSum = 0.obs;
 
-  void cacheRefresh() {
+  Future cacheRefresh() async {
     cacheRefreshSum.value += 1;
   }
 
