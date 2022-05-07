@@ -14,7 +14,10 @@ abstract class BaseController<M extends BaseModel> extends GetxController
 
   M initModel();
 
+  void initController() {}
+
   BaseController() {
+    initController();
     model = initModel();
     model.init();
   }
