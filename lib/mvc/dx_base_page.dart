@@ -8,8 +8,8 @@ abstract class BasePage<T extends BaseController> {
   ///子类调用
   void initBasePage(BuildContext context);
 
-  void initBase(T controller, BuildContext context) {
-    mController = Get.put(controller);
+  void initBase(T controller, BuildContext context, {String? tag}) {
+    mController = Get.put(controller, tag: tag);
     _init(context);
   }
 
