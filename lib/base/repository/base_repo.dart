@@ -2,7 +2,7 @@ library repo;
 
 import 'package:base/mvvm/repo/api_repository.dart';
 import 'package:base/mvvm/repo/dio_proxy.dart';
-import '../http/a_request_invoker.dart';
+import '../http/sample_dio_proxy.dart';
 import 'package:common/network/dio_client.dart';
 
 // repos

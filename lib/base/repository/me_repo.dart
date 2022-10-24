@@ -4,12 +4,17 @@ part of repo;
 class MeRepo extends BaseRepo {
   /// 获取我的账号信息
   Future<AResponse<dynamic>> fetchProfile(
-    int storeId,
-    int? categoryId,
-    int? statusId, {
-    // 搜索关键字
-    String? keyword,
+    int id, {
+    String? time,
   }) {
-    return requestOnFuture("path");
+    return requestOnFuture(
+      "api path",
+      method: Method.get,
+      params: {
+        'id': id,
+        'time': time,
+      },
+      format: (data) => "",
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:common/launcher/a_launcher_strategy.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sample/app/my_app.dart';
+import 'package:sample/app/src/my_app.dart';
 
 /// app启动器
 class AppLauncher {
