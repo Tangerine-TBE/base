@@ -1,4 +1,4 @@
-import 'package:sample/app/launcher_strategy/base_sample_launcher_strategy.dart';
+import 'package:sample/app/launcher/strategy/base_sample_launcher_strategy.dart';
 
 /// Pre预发布环境启动参数
 class PreLauncherStrategy extends BaseSampleLauncherStrategy {

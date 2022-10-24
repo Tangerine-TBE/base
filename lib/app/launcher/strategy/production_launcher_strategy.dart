@@ -1,4 +1,4 @@
-import 'package:sample/app/launcher_strategy/base_sample_launcher_strategy.dart';
+import 'package:sample/app/launcher/strategy/base_sample_launcher_strategy.dart';
 
 /// Production正式环境启动参数
 class ProductionLauncherStrategy extends BaseSampleLauncherStrategy {
