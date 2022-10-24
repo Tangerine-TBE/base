@@ -7,8 +7,6 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
-
 import 'status_code.dart';
 
 // parts

@@ -14,10 +14,8 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   ## ---- base ----
-
-  ## ---- common ----
-  common:
-    path: ./library/common
+  base:
+    path: ./library/base
 
 
 dev_dependencies:

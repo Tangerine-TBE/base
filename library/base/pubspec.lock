@@ -42,7 +42,7 @@ packages:
       path: "../common"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.0"
   cross_file:
     dependency: transitive
     description:
@@ -58,7 +58,7 @@ packages:
     source: hosted
     version: "3.0.1"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       url: "https://pub.flutter-io.cn"
