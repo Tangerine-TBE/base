@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  ## ---- network ----
+  get: ^4.6.5
   dio: 4.0.0 # 网络请求
 
   common:

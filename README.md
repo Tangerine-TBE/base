@@ -8,8 +8,9 @@ Flutter项目基础架构
 
 - lib（架构代码运用实例）
   - app
-    - flavor // 启动对应的环境
-    - launcher_strategy // 环境配置策略
+    - launcher
+      - flavor // 启动对应的环境
+      - launcher_strategy // 环境配置策略
     - src // 页面、业务
   - base
     - http // 网络请求对象、拦截器
@@ -43,6 +44,8 @@ Flutter项目基础架构
 
 ### 3. /lib/app 详细说明
 
-- flavor 启动入口，配合Android Studio的Run Configuration使用
-- launcher_strategy 启动策略，专注配置环境变量
+- launcher 专注配置启动策略，以创造环境变量
+  - flavor 启动入口，配合Android Studio的Run Configuration使用
+  - strategy 启动策略，继承ALauncherStrategy
 - src 页面和业务，可参考如何实现MVVM
+  - my_app.dart 主页面
