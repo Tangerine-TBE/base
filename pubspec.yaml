@@ -17,6 +17,10 @@ dependencies:
   base:
     path: ./library/base
 
+  ## ---- common ----
+  common:
+    path: ./library/common
+
 
 dev_dependencies:
   flutter_test:

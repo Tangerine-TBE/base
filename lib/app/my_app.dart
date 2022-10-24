@@ -1,11 +1,24 @@
+import 'package:common/launcher/launcher_strategy.dart';
+import 'package:common/log/a_logger.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
+/// app
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({
+    super.key,
+    required this.launcherStrategy,
+  }) {
+    _init();
+    String env = launcherStrategy.envName;
+    String host = launcherStrategy.host;
+    bool isDebug = launcherStrategy.isDebug;
+    logI("my_app.dart: launcher strategy env: $env, isDebug: $isDebug, host: $host");
+  }
+
+  /// 启动策略
+  late LauncherStrategy launcherStrategy;
+
 
   // This widget is the root of your application.
   @override
@@ -17,6 +30,10 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
+  }
+
+  void _init() {
+    installLogger();
   }
 }
 
