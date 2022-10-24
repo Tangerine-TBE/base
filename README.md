@@ -1,2 +1,16 @@
-## ***DX_Plugin*** 自用封装及工具类集合
-[DX_Http(Dio封装)](https://gitee.com/liverpoolDX/dx_plugin/blob/master/lib/dx_http.md) : CallBack/Stream方式请求、数据缓存、文件下载、支持多域名。
+# common
+
+project shared common code
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
