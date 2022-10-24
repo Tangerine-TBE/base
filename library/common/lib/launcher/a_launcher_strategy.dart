@@ -3,7 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 /// app启动策略
 /// 可配置环境变量
 abstract class ALauncherStrategy {
-  bool isDebug = false;
+  bool isDebug = true;
 
   String get host;
 

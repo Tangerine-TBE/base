@@ -11,7 +11,6 @@ Flutter项目基础架构
     - flavor // 启动对应的环境
     - launcher_strategy // 环境配置策略
     - src // 页面、业务
-    - build_config.dart // 静态环境变量
   - base
     - http // 网络请求对象、拦截器
     - repository // api仓库
@@ -23,6 +22,7 @@ Flutter项目基础架构
       - repo // api仓库、api数据转换
       - view // 基于GetView<C>，base_page、base_appbar_page封装基础页面
       - vm // 基于GetXController的数据持久化层、持有repo对象
+    - build_config.dart // 静态环境变量
   - common (package)
     - common // 可共享组件和拓展
     - launcher // 启动策略

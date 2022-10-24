@@ -1,6 +1,7 @@
 import 'package:common/launcher/a_launcher_strategy.dart';
 import 'package:common/log/a_logger.dart';
 import 'package:flutter/material.dart';
+import 'package:sample/base/build_config.dart';
 
 /// app
 // ignore: must_be_immutable
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
     String host = launcherStrategy.host;
     bool isDebug = launcherStrategy.isDebug;
     logI("my_app.dart: launcher strategy env: $env, isDebug: $isDebug, host: $host");
+    BuildConfig.envName = env;
+    BuildConfig.isDebug = isDebug;
+    BuildConfig.host = host;
   }
 
   /// 启动策略

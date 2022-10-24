@@ -13,4 +13,7 @@ class ProductionLauncherStrategy extends BaseSampleLauncherStrategy {
 
   @override
   String proxyPort = "8888";
+
+  @override
+  bool get isDebug => false;
 }
