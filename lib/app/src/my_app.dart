@@ -5,16 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:sample/base/build_config.dart';
 import 'package:get/get.dart';
 import 'package:sample/base/config/route_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:base/app/base_app.dart';
 
 /// app
 // ignore: must_be_immutable
-class MyApp extends StatelessWidget {
+class MyApp extends BaseApp {
   MyApp({
     super.key,
-    required this.launcherStrategy,
-    required this.route,
-  }) {
-    _init();
+    required ALauncherStrategy launcherStrategy,
+    required ARoute route,
+  }) : super(launcherStrategy: launcherStrategy, route: route);
+
+  @override
+  void setBuildConfig(ALauncherStrategy launcherStrategy) {
     String env = launcherStrategy.envName;
     String host = launcherStrategy.host;
     bool isDebug = launcherStrategy.isDebug;
@@ -24,25 +28,4 @@ class MyApp extends StatelessWidget {
     BuildConfig.isDebug = isDebug;
     BuildConfig.host = host;
   }
-
-  /// 启动策略
-  late ALauncherStrategy launcherStrategy;
-
-  /// 页面路由
-  late ARoute route;
-
-  /// 三方库等的初始化操作
-  void _init() {
-    installLogger();
-  }
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      getPages: route.getPages(),
-      initialRoute: RouteName.home,
-    );
-  }
-
 }
