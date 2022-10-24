@@ -2,7 +2,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 /// app启动策略
 /// 可配置环境变量
-abstract class LauncherStrategy {
+abstract class ALauncherStrategy {
   bool isDebug = false;
 
   String get host;
@@ -15,7 +15,7 @@ abstract class LauncherStrategy {
 }
 
 /// 通用策略
-abstract class BaseLauncherStrategy extends LauncherStrategy {
+abstract class BaseLauncherStrategy extends ALauncherStrategy {
   @override
   Future<String> get appVersion async =>
       (await PackageInfo.fromPlatform()).version;

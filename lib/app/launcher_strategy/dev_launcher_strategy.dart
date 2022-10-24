@@ -1,4 +1,4 @@
-import 'package:sample/launcher/base_sample_launcher_strategy.dart';
+import 'package:sample/app/launcher_strategy/base_sample_launcher_strategy.dart';
 
 /// Dev开发环境启动参数
 class DevLauncherStrategy extends BaseSampleLauncherStrategy {

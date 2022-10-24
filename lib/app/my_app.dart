@@ -1,4 +1,4 @@
-import 'package:common/launcher/launcher_strategy.dart';
+import 'package:common/launcher/a_launcher_strategy.dart';
 import 'package:common/log/a_logger.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   }
 
   /// 启动策略
-  late LauncherStrategy launcherStrategy;
+  late ALauncherStrategy launcherStrategy;
 
 
   // This widget is the root of your application.
