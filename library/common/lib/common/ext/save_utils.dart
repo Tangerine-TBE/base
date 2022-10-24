@@ -1,4 +1,4 @@
-import 'package:get_storage/get_storage.dart';
+part of common;
 
 ///抽取以便更換三方庫
 class SaveUtils {

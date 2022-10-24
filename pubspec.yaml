@@ -1,5 +1,5 @@
-name: common
-description: project shared common code
+name: sample
+description: sample
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -12,8 +12,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.2
+  ## ---- base ----
+
+  ## ---- common ----
+  common:
+    path: ./library/common
+
 
 dev_dependencies:
   flutter_test:

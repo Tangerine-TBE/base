@@ -17,9 +17,6 @@ dependencies:
   get_storage: ^2.0.3
   flutter_easyloading: ^3.0.5 # loading效果
   flutter_screenutil: ^5.5.4 #适配方案
-  reorderable_grid_view: ^2.2.5 # 拖拽重排顺序GridView
-  roundcheckbox: ^2.0.4 # 可自定義顏色checkbox
-  dropdown_button2: ^1.8.5 # 下拉菜单
   image_picker: ^0.8.6 # 图片选中库
   intl: ^0.17.0 # 时间DateFormat
 

@@ -1,4 +1,4 @@
-import 'package:image_picker/image_picker.dart';
+part of common;
 
 class AImagePicker {
   static final AImagePicker _instance = AImagePicker._init();

@@ -1,5 +1,26 @@
+library common;
+
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:get_storage/get_storage.dart';
+
+// parts
+part 'widget/text/no_border_text_field.dart';
+
+part 'widget/dialog/a_image_picker.dart';
+
+part 'widget/dialog/confirm_dialog.dart';
+
+part 'widget/checkbox/stful_check_box.dart';
+
+part 'ext/color.dart';
+
+part 'ext/save_utils.dart';
+
+part 'ext/standard.dart';
 
 /// 打开日期选择器
 Future<DateTime?> showDate(BuildContext context, {String? dateTime}) async {

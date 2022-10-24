@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+part of common;
 
 /// 自带状态的checkbox
 // ignore: must_be_immutable

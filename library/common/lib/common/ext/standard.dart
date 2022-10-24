@@ -1,3 +1,5 @@
+part of common;
+
 extension StringExt on String? {
   bool get isNullOrEmpty => this == null || this == "";
 
