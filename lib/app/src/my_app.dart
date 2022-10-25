@@ -4,7 +4,7 @@ import 'package:common/log/a_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sample/app/launcher/strategy/base_sample_launcher_strategy.dart';
-import 'package:sample/app_base/build_config.dart';
+import 'package:sample/app_base/config/build_config.dart';
 
 /// app
 // ignore: must_be_immutable
@@ -18,7 +18,6 @@ class MyApp extends BaseMaterialApp<BaseSampleLauncherStrategy> {
   @override
   void init() {
     super.init();
-    // 强制竖屏
     logI("do your initialization");
   }
 
