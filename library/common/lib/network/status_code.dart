@@ -1,0 +1,4 @@
+const UNAUTHORIZED = 401;
+const FORBIDDEN = 403;
+const TIME_OUT = 408;
+const SERVER_ERROR = 500;

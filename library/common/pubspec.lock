@@ -8,13 +8,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.9.0"
-  base:
-    dependency: "direct main"
-    description:
-      path: "library/base"
-      relative: true
-    source: path
-    version: "0.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -43,13 +36,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.16.0"
-  common:
-    dependency: "direct main"
-    description:
-      path: "library/common"
-      relative: true
-    source: path
-    version: "0.0.0"
   cross_file:
     dependency: transitive
     description:
@@ -58,21 +44,14 @@ packages:
     source: hosted
     version: "0.3.3+2"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.5"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       url: "https://pub.flutter-io.cn"
@@ -105,7 +84,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_easyloading:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_easyloading
       url: "https://pub.flutter-io.cn"
@@ -126,7 +105,7 @@ packages:
     source: hosted
     version: "2.0.7"
   flutter_screenutil:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_screenutil
       url: "https://pub.flutter-io.cn"
@@ -150,21 +129,21 @@ packages:
     source: sdk
     version: "0.0.0"
   fluttertoast:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: fluttertoast
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "8.1.1"
   get:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.6.5"
   get_storage:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get_storage
       url: "https://pub.flutter-io.cn"
@@ -185,7 +164,7 @@ packages:
     source: hosted
     version: "4.0.2"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.flutter-io.cn"
@@ -220,7 +199,7 @@ packages:
     source: hosted
     version: "2.6.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.flutter-io.cn"
@@ -241,7 +220,7 @@ packages:
     source: hosted
     version: "2.0.1"
   logger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logger
       url: "https://pub.flutter-io.cn"
@@ -269,7 +248,7 @@ packages:
     source: hosted
     version: "1.8.0"
   package_info_plus:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: package_info_plus
       url: "https://pub.flutter-io.cn"
@@ -412,7 +391,7 @@ packages:
       name: typed_data
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.1"
+    version: "1.3.0"
   vector_math:
     dependency: transitive
     description:
@@ -435,5 +414,5 @@ packages:
     source: hosted
     version: "0.2.0+2"
 sdks:
-  dart: ">=2.18.1 <3.0.0"
+  dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"
