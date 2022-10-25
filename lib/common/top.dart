@@ -17,8 +17,6 @@ part 'widget/dialog/confirm_dialog.dart';
 
 part 'widget/checkbox/stful_check_box.dart';
 
-part 'ext/color.dart';
-
 part 'ext/save_utils.dart';
 
 part 'ext/standard.dart';
