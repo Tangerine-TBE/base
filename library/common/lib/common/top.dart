@@ -1,5 +1,6 @@
 library common;
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +22,12 @@ part 'ext/color.dart';
 part 'ext/save_utils.dart';
 
 part 'ext/standard.dart';
+
+/// 弹出toast
+/// 默认样式
+showToast(String? msg) {
+  Fluttertoast.showToast(msg: msg ?? "");
+}
 
 /// 打开日期选择器
 Future<DateTime?> showDate(BuildContext context, {String? dateTime}) async {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'base_page.dart';
+import 'base_view.dart';
 
 /// 基础带appbar的page
-abstract class BaseAppBarPage<C> extends BasePage<C> {
+abstract class BaseAppBarPage<C> extends BaseView<C> {
   const BaseAppBarPage({Key? key}) : super(key: key);
 
   /// 子类填写标题

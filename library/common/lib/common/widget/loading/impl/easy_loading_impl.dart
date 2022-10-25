@@ -25,9 +25,6 @@ class EasyLoadingImpl extends ILoading {
   }
 
   @override
-  void showEmpty() {}
-
-  @override
   void showError(String? message) {
     EasyLoading.showError(message ?? "");
   }

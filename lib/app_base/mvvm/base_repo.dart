@@ -6,7 +6,7 @@ import '../http/sample_dio_proxy.dart';
 import 'package:common/network/dio_client.dart';
 
 // repos
-part 'me_repo.dart';
+part '../repository/me_repo.dart';
 
 /// 业务层的base请求仓库
 class BaseRepo extends ApiRepository {

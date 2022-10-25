@@ -19,6 +19,7 @@ dependencies:
   image_picker: ^0.8.6 # 图片选中库
   intl: ^0.17.0 # 时间DateFormat
   package_info_plus: ^3.0.1 # 包信息
+  fluttertoast: ^8.1.1 # toast
 
   ## ---- log ----
   logger: 1.1.0

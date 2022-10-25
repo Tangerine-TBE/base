@@ -10,22 +10,19 @@ import '../repo/api_repository.dart';
 
 /// Controller基類
 /// BaseVM
-class BaseController extends GetxController
+abstract class BaseViewModel extends GetxController
     with WidgetsBindingObserver, NavigationHelper {
   /// 頁面狀態 - loading
   void showLoading() => GLoading.instance.showLoading();
 
   /// 頁面狀態 - 空
-  void showEmpty() {}
+  void showEmpty();
 
   /// 頁面狀態 - 錯誤
-  void showError(String? message) {
-    // TODO show toast
-  }
+  void showError(String? message);
 
-  /// TODO require override
   /// 401 403 token過期/更新，需要重新登錄
-  void handleUnAuthorizedError() {}
+  void handleUnAuthorizedError();
 
   /// 頁面狀態 - 重置
   void resetShow() {}

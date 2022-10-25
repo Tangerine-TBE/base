@@ -6,7 +6,5 @@ abstract class ILoading {
 
   void dismiss();
 
-  void showEmpty();
-
   void showError(String? message);
 }

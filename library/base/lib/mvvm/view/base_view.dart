@@ -6,8 +6,8 @@ import '../../helper/navigation_helper.dart';
 
 
 /// 支持背景漸變、沉浸式基础page页面
-abstract class BasePage<C> extends GetView<C> with NavigationHelper {
-  const BasePage({Key? key}) : super(key: key);
+abstract class BaseView<C> extends GetView<C> with NavigationHelper {
+  const BaseView({Key? key}) : super(key: key);
 
   /// 构建appbar
   AppBar? buildAppBar();

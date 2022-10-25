@@ -36,11 +36,6 @@ class GLoading extends ILoading {
   }
 
   @override
-  void showEmpty() {
-    _proxy.showEmpty();
-  }
-
-  @override
   void showError(String? message) {
     _proxy.showError(message);
   }
