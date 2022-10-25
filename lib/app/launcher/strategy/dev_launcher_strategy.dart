@@ -6,7 +6,7 @@ class DevLauncherStrategy extends BaseSampleLauncherStrategy {
   String get envName => "dev";
 
   @override
-  String get host => "https://api-dev.bw.com/";
+  String get host => "https://test-merchant-api.tesoliving.com/";
 
   @override
   String proxy = "192.168.2.1";

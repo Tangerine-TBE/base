@@ -6,7 +6,7 @@ class PreLauncherStrategy extends BaseSampleLauncherStrategy {
   String get envName => "pre";
 
   @override
-  String get host => "https://api-pre.bw.com/";
+  String get host => "https://pre-merchant-api.tesoliving.com/";
 
   @override
   String proxy = "192.168.2.1";

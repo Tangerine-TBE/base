@@ -1,6 +1,12 @@
 part of loading;
 
+/// 基于EasyLoading的实现
 class EasyLoadingImpl extends ILoading {
+  @override
+  Widget init(BuildContext context, Widget? child) {
+    return EasyLoading.init()(context, child);
+  }
+
   @override
   void install(Widget loadingWidget) {
     EasyLoading.instance

@@ -6,7 +6,7 @@ class ProductionLauncherStrategy extends BaseSampleLauncherStrategy {
   String get envName => "production";
 
   @override
-  String get host => "https://api.bw.com/";
+  String get host => "https://merchant-api.tesoliving.com/";
 
   @override
   String proxy = "192.168.2.1";

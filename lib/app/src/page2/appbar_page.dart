@@ -15,8 +15,9 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
   }
 
   @override
-  onTapRight(BuildContext context) {
+  onTapRight(BuildContext context) async {
     showToast("tap right");
+    await controller.fetchMenuStatus();
   }
 
   @override

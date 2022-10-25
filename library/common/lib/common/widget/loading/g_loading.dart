@@ -21,6 +21,11 @@ class GLoading extends ILoading {
   final ILoading _proxy = EasyLoadingImpl();
 
   @override
+  Widget init(BuildContext context, Widget? child) {
+    return _proxy.init(context, child);
+  }
+
+  @override
   void install(Widget loadingWidget) {
     _proxy.install(loadingWidget);
   }

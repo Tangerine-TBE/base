@@ -56,7 +56,7 @@ class SignInterceptor extends dio.Interceptor {
       }
     }
     // TODO
-    // sign += Url.MD5_KEY;
+    // sign += "xldfjeijflskslfjsalkdfjlasglakgjdjkhgkruiei";
     // paramMap["_client_sign"] = BaseUtils.md5Encoder(sign);
     return paramMap;
   }

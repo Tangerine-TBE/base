@@ -6,6 +6,7 @@ import 'package:sample/app/src/page1/home_page.dart';
 import 'package:sample/app/src/page1/home_page_controller.dart';
 import 'package:sample/app/src/page2/appbar_page.dart';
 import 'package:sample/app/src/page2/appbar_page_controller.dart';
+import 'package:sample/app_base/mvvm/base_repo.dart';
 
 part 'route_name.dart';
 
@@ -26,6 +27,7 @@ class RouteConfig extends ARoute {
           page: () => const AppBarPage(),
           binding: BindingsBuilder(() {
             Get.lazyPut(() => AppBarPageController());
+            Get.lazyPut(() => MenuRepo());
           }),
         ),
       ];
