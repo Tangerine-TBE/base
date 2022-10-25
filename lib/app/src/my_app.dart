@@ -40,5 +40,6 @@ class MyApp extends BaseMaterialApp<BaseSampleLauncherStrategy> {
       GetMaterialApp(
         getPages: route.getPages(),
         initialRoute: route.initialRoute,
+        defaultTransition: Transition.rightToLeftWithFade,
       );
 }

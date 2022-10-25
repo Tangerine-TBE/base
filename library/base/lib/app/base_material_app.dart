@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 
 /// 封装通用app，给客户端项目继承
 // ignore: must_be_immutable
-abstract class BaseMaterialApp<T extends ALauncherStrategy> extends StatelessWidget {
+abstract class BaseMaterialApp<T extends ALauncherStrategy>
+    extends StatelessWidget {
   BaseMaterialApp(
     this.launcherStrategy,
     this.route, {
@@ -25,10 +26,11 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy> extends StatelessWid
   /// material app
   GetMaterialApp? buildApp(BuildContext context, Widget? child);
 
-  /// 设置环境变量
+  /// 环境变量配置交给客户端处理
   void buildConfig(T launcherStrategy);
 
   /// 初始化架构内可用的东西
+  /// 可重写
   void init() {
     installLogger();
 
@@ -39,18 +41,18 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy> extends StatelessWid
 
   @override
   Widget build(BuildContext context) {
-    logI("app start building..");
     widget ??= ScreenUtilInit(
-        builder: (context, child) =>
-            buildApp(context, child) ??
-            GetMaterialApp(
-              getPages: route.getPages(),
-              initialRoute: route.initialRoute,
-            ),
-        //设计图尺寸
-        // designSize: Size(
-        //     GeneralConstant.DESIGN_WIDTH, GeneralConstant.DESIGN_HEIGHT,));
-      );
+      builder: (context, child) =>
+          buildApp(context, child) ??
+          GetMaterialApp(
+            getPages: route.getPages(),
+            initialRoute: route.initialRoute,
+            defaultTransition: Transition.rightToLeftWithFade,
+          ),
+      //设计图尺寸
+      // designSize: Size(
+      //     GeneralConstant.DESIGN_WIDTH, GeneralConstant.DESIGN_HEIGHT,));
+    );
     return widget!;
   }
 }
