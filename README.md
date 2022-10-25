@@ -4,9 +4,18 @@ Flutter项目基础架构
 
 ## Getting Started
 
+### 引入
+
+```yaml
+common:
+  git:
+    url: http://app.support:Appsupport2020@gitlab.boardware.com/flutter-framework/base.git
+    ref: v2.x.x
+```
+
 ### 目录说明
 
-- lib（架构代码运用实例）
+- example（架构代码运用实例）
   - app
     - launcher
       - flavor // 启动对应的环境
@@ -17,8 +26,8 @@ Flutter项目基础架构
     - http // 网络请求对象、拦截器
     - mvvm // 基于架构，定制化适合app自身的base类
     - repository // api 仓库
-- library（核心架构代码）
-  - base (package)
+- lib（核心架构代码）
+  - base 
     - app
     - helper
     - mvvm // MVVM架构基类
@@ -27,7 +36,7 @@ Flutter项目基础架构
       - view // 基于GetView<C>，base_page、base_appbar_page封装基础页面
       - vm // 基于GetXController的数据持久化层、持有repo对象
     - route // 抽象路由
-  - common (package)
+  - common 
     - common // 可共享组件和拓展
     - launcher // 启动策略
     - log // 日志工具
