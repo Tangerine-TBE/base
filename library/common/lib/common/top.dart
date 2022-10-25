@@ -24,7 +24,7 @@ part 'ext/standard.dart';
 
 /// 打开日期选择器
 Future<DateTime?> showDate(BuildContext context, {String? dateTime}) async {
-  DateTime _dateTime;
+  DateTime? _dateTime;
   if (dateTime?.isNotEmpty == true) {
     _dateTime = DateFormat('MM/dd/yyyy').parse(dateTime!);
   } else {
