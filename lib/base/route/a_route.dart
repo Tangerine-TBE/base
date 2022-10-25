@@ -8,4 +8,7 @@ abstract class ARoute {
 
   /// 第一个页面
   abstract String initialRoute;
+
+  /// 登录页面
+  abstract String? loginRoute;
 }

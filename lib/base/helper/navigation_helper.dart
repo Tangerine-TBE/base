@@ -2,26 +2,25 @@ import 'package:get/get.dart';
 
 mixin NavigationHelper {
   /// 普通跳轉
-  void navigateTo(String route, {bool requiresLogin = false, dynamic args}) {
+  void navigateTo(
+    String route, {
+    dynamic args,
+  }) {
     intent() {
       Get.toNamed(route, arguments: args);
     }
 
-    if (requiresLogin) {
-      // _checkTokenDo(intent);
-    } else {
-      intent.call();
-    }
+    intent.call();
   }
 
   /// 帶頁面數據回調跳轉
   void navigateForResult<R>(
-      String route, {
-        dynamic args,
-        required Function(R? result) onResult,
-      }) {
+    String route, {
+    dynamic args,
+    required Function(R? result) onResult,
+  }) {
     Get.toNamed(route, arguments: args)?.then(
-          (value) => onResult.call(value),
+      (value) => onResult.call(value),
     );
   }
 
@@ -37,17 +36,4 @@ mixin NavigationHelper {
   void finish() {
     Get.back();
   }
-
 }
-
-// void _checkTokenDo(Function block) async {
-//   if (_isLogin()) {
-//     block.call();
-//   } else {
-//     bool isLogin = await Get.to(() => LoginRoute()) ?? false;
-//     if (isLogin) block.call();
-//   }
-// }
-
-// bool _isLogin() =>
-//     !Url.token.isNullOrEmpty;

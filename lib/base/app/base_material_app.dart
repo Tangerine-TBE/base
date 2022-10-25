@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../common/launcher/a_launcher_strategy.dart';
 import '../../common/log/a_logger.dart';
 import '../route/a_route.dart';
+
 /// 封装通用app，给客户端项目继承
 // ignore: must_be_immutable
 abstract class BaseMaterialApp<T extends ALauncherStrategy>

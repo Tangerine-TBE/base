@@ -35,4 +35,7 @@ class RouteConfig extends ARoute {
 
   @override
   String initialRoute = RouteName.home;
+
+  @override
+  String? loginRoute;
 }
