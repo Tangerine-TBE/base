@@ -25,7 +25,7 @@ class AResponse<T> {
   ) async {
     try {
       return await futureTask().then(
-        (responseBean) => handleDioResponse(responseBean, onResponse),
+        (dioResponse) => handleDioResponse(dioResponse, onResponse),
       );
     } catch (error) {
       logger.e("---- Response.convert() ====> catch request error: $error");
@@ -68,9 +68,9 @@ class AResponse<T> {
     T Function(dynamic data) onResponse,
   ) {
     Map<String, dynamic> map = jsonDecode(dioResponse.data!);
-    var code = map["code"];
-    var message = map["message"];
-    var data = map["data"]; // data 可能是List 或 Object 或 基本數據類型（bool）
+    var code = map["code"] ?? dioResponse.statusCode;
+    var message = map["message"] ?? dioResponse.statusMessage;
+    var data = map["data"] ?? map; // data 可能是List 或 Object 或 基本數據類型（bool）
     logger.w(
         ("--- 注意response.code: ${dioResponse.statusCode}, response.message: ${dioResponse.statusMessage}"));
     logger.i("---- Evan =====> response: code[$code], || "

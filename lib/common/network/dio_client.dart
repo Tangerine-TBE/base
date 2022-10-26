@@ -47,6 +47,46 @@ abstract class DioClient {
     };
   }
 
+  /// 单文件上传
+  Future<Response<String>> uploadFile({
+    required String url,
+    required String formDataKey,
+    required String filePath,
+    String? fileName,
+    Function(int sent, int total)? progressListener,
+  }) async {
+    FormData formData = FormData.fromMap({
+      formDataKey: await MultipartFile.fromFile(
+        filePath,
+        filename: fileName,
+      ),
+    });
+    return await _dio.post(
+      url,
+      data: formData,
+      onSendProgress: progressListener,
+    );
+  }
+
+  /// 多文件上传
+  Future<Response<String>> uploadFiles({
+    required String url,
+    required String formDataKey,
+    required List<String> filePaths,
+    Function(int sent, int total)? progressListener,
+  }) async {
+    FormData formData = FormData.fromMap({
+      formDataKey: filePaths.map((filepath) async {
+        return await MultipartFile.fromFile(filepath);
+      }).toList(),
+    });
+    return await _dio.post(
+      url,
+      data: formData,
+      onSendProgress: progressListener,
+    );
+  }
+
   Future<Response<String>> requestOnFuture({
     required String path,
     Map<String, dynamic>? params,
