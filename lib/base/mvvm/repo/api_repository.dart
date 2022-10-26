@@ -38,6 +38,49 @@ abstract class ApiRepository {
     );
   }
 
+
+  /// 单文件上传
+  Future<AResponse<F>> uploadFile<F>({
+    required String url,
+    required String formDataKey,
+    required String filePath,
+    String? fileName,
+    Function(dynamic data)? format,
+    Function(int sent, int total)? progressListener,
+  }) async {
+    var futureTask = proxy.uploadFile(
+      url: url,
+      formDataKey: formDataKey,
+      filePath: filePath,
+      progressListener: progressListener,
+    );
+
+    return AResponse.convert<F>(
+          () => futureTask,
+          (data) => format?.call(data),
+    );
+  }
+
+  /// 多文件上传
+  Future<AResponse<F>> uploadFiles<F>({
+    required String url,
+    required String formDataKey,
+    required List<String> filePaths,
+    Function(dynamic data)? format,
+    Function(int sent, int total)? progressListener,
+  }) async {
+    var futureTask = proxy.uploadFiles(
+      url: url,
+      formDataKey: formDataKey,
+      filePaths: filePaths,
+      progressListener: progressListener,
+    );
+    return AResponse.convert<F>(
+          () => futureTask,
+          (data) => format?.call(data),
+    );
+  }
+
   void cancelAll() {
     _globalCancelToken.cancel();
   }
