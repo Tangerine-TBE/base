@@ -1,9 +1,9 @@
-part of common;
+part of common_top;
 
 /// 自带状态的checkbox
 // ignore: must_be_immutable
 class StatefulCheckbox extends StatefulWidget {
-  StatefulCheckbox({
+  const StatefulCheckbox({
     Key? key,
     this.size = 16,
     this.initCheck = false,
@@ -12,11 +12,11 @@ class StatefulCheckbox extends StatefulWidget {
     this.fontSize = 14,
   }) : super(key: key);
 
-  final double size;
+  final num size;
   final bool initCheck;
 
   final String? text;
-  final int fontSize;
+  final num fontSize;
 
   final Function(bool isChecked) onCheck;
 
@@ -30,6 +30,13 @@ class _StatefulCheckboxState extends State<StatefulCheckbox> {
   @override
   void initState() {
     super.initState();
+    isChecked = widget.initCheck;
+  }
+
+  @override
+  void didUpdateWidget(covariant StatefulCheckbox oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // 外层组件通知更新时
     isChecked = widget.initCheck;
   }
 

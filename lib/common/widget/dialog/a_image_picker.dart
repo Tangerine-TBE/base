@@ -1,4 +1,4 @@
-part of common;
+part of common_top;
 
 class AImagePicker {
   static final AImagePicker _instance = AImagePicker._init();

@@ -1,4 +1,4 @@
-part of common;
+part of common_top;
 
 /// 取消 - 确认 对话框
 class ConfirmDialog extends AlertDialog {
