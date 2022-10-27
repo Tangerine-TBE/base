@@ -13,7 +13,9 @@ common:
     ref: v2.x.x
 ```
 
-### 目录说明
+## 目录说明
+
+#### `/example`目录 app基础架构案例
 
 - example（架构代码运用实例）
   - app
@@ -26,7 +28,9 @@ common:
     - http // 网络请求对象、拦截器
     - mvvm // 基于架构，定制化适合app自身的base类
     - repository // api 仓库
-- lib（核心架构代码）
+
+#### `/lib` 架构核心目录
+- lib
   - base 
     - app
     - helper
@@ -44,7 +48,7 @@ common:
 
 > 架构封装并非简单抽取，应尽可能使用ioc技术，聚焦管理抽象依赖
 
-### 1. /lib/app 详细说明
+### 1. /example/app 详细说明
 
 - launcher 专注配置启动策略，以创造环境变量
   - flavor 启动入口，配合Android Studio的Run Configuration使用
@@ -52,7 +56,7 @@ common:
 - src 页面和业务，可参考如何实现MVVM
   - my_app.dart // app加载入口
 
-### 2. /lib/app_base 详细说明
+### 2. /example/app_base 详细说明
 
 #### 2.1 http 请求
 
@@ -68,11 +72,18 @@ common:
 
 #### 2.2 repository api请求仓库
 
-- 如me_repo.dart，需要继承base_repo.dart
+- 如menu_repo.dart，需要继承base_repo.dart
 
-### 3. /library/base 详细说明
+### 3. /lib/base 详细说明
 
 #### 3.1 app
 
 app入口类需要继承`BaseMaterialApp`，规定构造参数`ALauncherStrategy`和`ARoute`
 
+#### 3.2 mvvm
+
+MVVM架构，abstract类居多，可供客户端拓展
+
+#### 3.3 route
+
+基于GetPage，规定了客户端路由配置模板
