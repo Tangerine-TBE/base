@@ -54,7 +54,8 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
           builder: (context) => InkWell(
             onTap: () => onTapRight.call(context),
             child: Container(
-              padding: EdgeInsets.only(right: 12.w),
+              padding: EdgeInsets.only(right: 12.w, left: 12.w),
+              alignment: Alignment.centerRight,
               child: buildRightIcon(),
             ),
           ),
