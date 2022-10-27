@@ -1,4 +1,4 @@
-part of common;
+part of common_top;
 
 /// 不带边框的输入框
 class NoBorderTextField extends StatelessWidget {
