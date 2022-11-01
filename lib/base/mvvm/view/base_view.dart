@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../helper/navigation_helper.dart';
 
-
 /// 支持背景漸變、沉浸式基础page页面
 abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   const BaseView({Key? key}) : super(key: key);
@@ -30,6 +29,9 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   /// 渐变背景色
   List<Color>? loadGradientColors() => null;
 
+  /// 返回按钮点击
+  Future<bool>? onBackPressed() => null;
+
   @override
   Widget build(BuildContext context) {
     // bottom navigation
@@ -38,13 +40,16 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         systemNavigationBarColor: loadSystemNavigationBarColor(),
       ),
     );
-    return Scaffold(
-      // appbar
-      appBar: buildAppBar(),
-      // draw
-      drawer: buildDrawer(),
-      resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+    return WillPopScope(
+      onWillPop: () => onBackPressed.call() ?? Future.value(true),
+      child: Scaffold(
+        // appbar
+        appBar: buildAppBar(),
+        // draw
+        drawer: buildDrawer(),
+        resizeToAvoidBottomInset: false,
+        body: _buildBody(context),
+      ),
     );
   }
 
