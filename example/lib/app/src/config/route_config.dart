@@ -1,15 +1,12 @@
-library route;
-
 import 'package:common/base/route/a_route.dart';
+import 'package:example/app_base/config/route_name.dart';
 import 'package:get/get.dart';
 
-import '../../app/src/page1/home_page.dart';
-import '../../app/src/page1/home_page_controller.dart';
-import '../../app/src/page2/appbar_page.dart';
-import '../../app/src/page2/appbar_page_controller.dart';
-import '../mvvm/base_repo.dart';
-
-part 'route_name.dart';
+import '../page1/home_page.dart';
+import '../page1/home_page_controller.dart';
+import '../page2/appbar_page.dart';
+import '../page2/appbar_page_controller.dart';
+import '../../../app_base/mvvm/base_repo.dart';
 
 /// 服务项目的页面路由配置
 class RouteConfig extends ARoute {

@@ -3,5 +3,5 @@ import 'package:common/common/top.dart';
 
 class User {
   // 登录状态
-  bool get isLogin => !BuildConfig.token.isNullOrEmpty;
+  static bool get isLogin => !BuildConfig.token.isNullOrEmpty;
 }

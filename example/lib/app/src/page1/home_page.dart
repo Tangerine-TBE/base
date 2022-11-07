@@ -1,7 +1,7 @@
 import 'package:common/base/mvvm/view/base_view.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app_base/config/route_config.dart';
+import '../../../app_base/config/route_name.dart';
 import 'home_page_controller.dart';
 
 class HomePage extends BaseView<HomePageController> {

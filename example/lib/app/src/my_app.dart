@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../app_base/config/build_config.dart';
+import '../../app_base/config/user.dart';
 import '../launcher/strategy/base_sample_launcher_strategy.dart';
 
 /// app
@@ -22,6 +23,8 @@ class MyApp extends BaseMaterialApp<BaseSampleLauncherStrategy> {
     // 初始化项目自身业务，比如登录状态token等
     logI("do your initialization");
     BuildConfig.token = 'your token';
+
+    logI("check login status: ${User.isLogin}");
   }
 
   @override
