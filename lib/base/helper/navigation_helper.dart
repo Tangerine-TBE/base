@@ -13,15 +13,25 @@ mixin NavigationHelper {
     intent.call();
   }
 
+  /// 关闭自己然后跳转，无法back
+  void offNavigateTo(String route) {
+    Get.offNamed(route);
+  }
+
   /// 帶頁面數據回調跳轉
-  void navigateForResult<R>(
+  Future<R?> navigateForResult<R>(
     String route, {
     dynamic args,
-    required Function(R? result) onResult,
-  }) {
-    Get.toNamed(route, arguments: args)?.then(
-      (value) => onResult.call(value),
+    Function(R? result)? onResult,
+  }) async {
+    R? result;
+    await Get.toNamed(route, arguments: args)?.then<R>(
+      (value) {
+        result = value;
+        return onResult?.call(value);
+      },
     );
+    return Future.value(result);
   }
 
   /// 獲取Get傳來的arguments

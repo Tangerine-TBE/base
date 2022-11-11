@@ -48,7 +48,9 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         // draw
         drawer: buildDrawer(),
         resizeToAvoidBottomInset: false,
-        body: _buildBody(context),
+        body: Builder(
+          builder: (context) => _buildBody(context),
+        ),
       ),
     );
   }
