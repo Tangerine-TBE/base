@@ -18,9 +18,13 @@ mixin NavigationHelper {
     String route, {
     dynamic args,
     Function(R? result)? onResult,
-  }) {
-    var result = Get.toNamed(route, arguments: args)?.then<R>(
-      (value) => onResult?.call(value),
+  }) async {
+    R? result;
+    await Get.toNamed(route, arguments: args)?.then<R>(
+      (value) {
+        result = value;
+        return onResult?.call(value);
+      },
     );
     return Future.value(result);
   }
