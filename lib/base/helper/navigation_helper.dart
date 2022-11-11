@@ -14,14 +14,15 @@ mixin NavigationHelper {
   }
 
   /// 帶頁面數據回調跳轉
-  void navigateForResult<R>(
+  Future<R?> navigateForResult<R>(
     String route, {
     dynamic args,
-    required Function(R? result) onResult,
+    Function(R? result)? onResult,
   }) {
-    Get.toNamed(route, arguments: args)?.then(
-      (value) => onResult.call(value),
+    var result = Get.toNamed(route, arguments: args)?.then<R>(
+      (value) => onResult?.call(value),
     );
+    return Future.value(result);
   }
 
   /// 獲取Get傳來的arguments
