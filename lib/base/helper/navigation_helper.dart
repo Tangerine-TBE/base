@@ -13,6 +13,11 @@ mixin NavigationHelper {
     intent.call();
   }
 
+  /// 关闭自己然后跳转，无法back
+  void offNavigateTo(String route) {
+    Get.offNamed(route);
+  }
+
   /// 帶頁面數據回調跳轉
   Future<R?> navigateForResult<R>(
     String route, {
