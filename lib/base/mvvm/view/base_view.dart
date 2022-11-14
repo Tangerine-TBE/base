@@ -21,13 +21,10 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   Widget buildContentCover(BuildContext context) => const Offstage();
 
   /// 纯色背景
-  Color loadBackgroundColor() => const Color.fromARGB(255, 33, 33, 33);
+  Color get background => const Color.fromARGB(255, 33, 33, 33);
 
   /// 系统导航栏颜色
-  Color loadSystemNavigationBarColor() => const Color.fromARGB(255, 33, 37, 42);
-
-  /// 渐变背景色
-  List<Color>? loadGradientColors() => null;
+  Color get systemNavigationBarColor => const Color.fromARGB(255, 33, 37, 42);
 
   /// 返回按钮点击
   Future<bool>? onBackPressed() => null;
@@ -37,7 +34,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
     // bottom navigation
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: loadSystemNavigationBarColor(),
+        systemNavigationBarColor: systemNavigationBarColor,
       ),
     );
     return WillPopScope(
@@ -49,38 +46,19 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         drawer: buildDrawer(),
         resizeToAvoidBottomInset: false,
         body: Builder(
-          builder: (context) => _buildBody(context),
+          builder: (context) => buildBody(context),
         ),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
-    List<Color> backgroundColor = [
-      loadBackgroundColor(),
-      loadBackgroundColor()
-    ];
-    List<Color>? gradientColors = loadGradientColors();
-
-    var shaderColor = gradientColors ?? backgroundColor;
-
+  Widget buildBody(BuildContext context) {
     return Stack(
       children: [
-        // background
-        ShaderMask(
-          shaderCallback: (bounds) {
-            return LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: shaderColor,
-            ).createShader(bounds);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(0),
-            ),
-          ),
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: background,
         ),
         buildContent(context),
         buildContentCover(context),
