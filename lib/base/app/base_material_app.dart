@@ -36,8 +36,6 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
   void init() {
     // 安装默认logger
     installLogger();
-    // 自定义loading样式
-    // GLoading.instance.install(loadingWidget);
 
     // 构建环境变量
     buildConfig(launcherStrategy);

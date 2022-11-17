@@ -26,12 +26,5 @@ abstract class DioProxy extends DioClient {
         proxyPort: proxyPort,
         header: loadDefaultHeader(),
         interceptors: loadInterceptors(),
-        // header: {
-        //   "signType": "MD5",
-        //   "clientId": "2",
-        //   "token": "",
-        //   "typ": "JDBC",
-        // },
-        // interceptors: [SignInterceptor()],
       );
 }

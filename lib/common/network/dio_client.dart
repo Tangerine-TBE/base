@@ -3,6 +3,7 @@ library network;
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
+// import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
@@ -35,16 +36,23 @@ abstract class DioClient {
       ..add(LogInterceptor(requestBody: true, responseBody: true))
       ..addAll(config.interceptors ?? []);
     //SSL证书
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (client) {
-      //忽略SSL验证--待封装SSL证书
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      //代理
-      if (config.proxy != null) {
-        client.findProxy = (uri) => "PROXY ${config.proxy}:${config.proxyPort}";
-      }
-    };
+    HttpClientAdapter httpClientAdapter = _dio.httpClientAdapter;
+    if (httpClientAdapter is DefaultHttpClientAdapter) {
+      // 客户端adapter
+      httpClientAdapter.onHttpClientCreate = (client) {
+        //忽略SSL验证--待封装SSL证书
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        //代理
+        if (config.proxy != null) {
+          client.findProxy =
+              (uri) => "PROXY ${config.proxy}:${config.proxyPort}";
+        }
+      };
+    }
+    // else if (httpClientAdapter is BrowserHttpClientAdapter) {
+    //   // TODO 浏览器adapter
+    // }
   }
 
   /// 单文件上传
