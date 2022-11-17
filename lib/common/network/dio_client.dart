@@ -2,6 +2,7 @@ library network;
 
 import 'dart:io';
 
+import 'package:common/common/top.dart';
 import 'package:dio/adapter.dart';
 // import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
@@ -29,9 +30,7 @@ abstract class DioClient {
 
   /// 初始化_dio
   void install() {
-    BaseOptions options = DioOptions(host: config.host);
-
-    _dio = Dio(options);
+    _dio = Dio(config);
     _dio.interceptors
       ..add(LogInterceptor(requestBody: true, responseBody: true))
       ..addAll(config.interceptors ?? []);
@@ -44,7 +43,7 @@ abstract class DioClient {
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
         //代理
-        if (config.proxy != null) {
+        if (!config.proxy.isNullOrEmpty) {
           client.findProxy =
               (uri) => "PROXY ${config.proxy}:${config.proxyPort}";
         }
