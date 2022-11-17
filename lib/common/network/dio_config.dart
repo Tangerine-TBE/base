@@ -12,10 +12,7 @@ class DioOptions extends BaseOptions {
           connectTimeout: 30 * 1000,
           receiveTimeout: 30000,
           sendTimeout: 30000,
-          headers: {
-            "signType": "MD5",
-            "clientId": "2",
-          },
+          headers: header,
         );
 
   final String host;

@@ -3,7 +3,7 @@ library network;
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
-import 'package:dio/adapter_browser.dart';
+// import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
@@ -49,9 +49,10 @@ abstract class DioClient {
               (uri) => "PROXY ${config.proxy}:${config.proxyPort}";
         }
       };
-    } else if (httpClientAdapter is BrowserHttpClientAdapter) {
-      // TODO 浏览器adapter
     }
+    // else if (httpClientAdapter is BrowserHttpClientAdapter) {
+    //   // TODO 浏览器adapter
+    // }
   }
 
   /// 单文件上传
