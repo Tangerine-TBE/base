@@ -119,24 +119,33 @@ abstract class BaseViewModel extends GetxController
     );
 
     switch (response.code) {
-      case UNAUTHORIZED:
-      case FORBIDDEN:
+      case clientError:
+        _handleClientError(response.message);
+        break;
+      case unauthorized:
+      case forbidden:
         handleUnAuthorizedError();
         break;
-      case TIME_OUT:
+      case timeOut:
         showError(response.message);
         break;
-      case SERVER_ERROR:
+      case serverError:
         _handleServerError(response.message);
         break;
       default:
+        showError(response.message);
         break;
     }
+  }
+
+  /// 400 客户端错误
+  void _handleClientError(String? msg) {
+    showError(msg);
   }
 
   /// 500 服務器錯誤
   void _handleServerError(String? msg) {
     // toast is enough
-    showError("服務器發生錯誤:500");
+    showError("服務器發生錯誤:500,\nmessage:$msg");
   }
 }

@@ -37,22 +37,22 @@ class AResponse<T> {
             msg = "請求取消";
             break;
           case DioErrorType.connectTimeout:
-            code = TIME_OUT;
+            code = timeOut;
             msg = "連接超時";
             break;
           case DioErrorType.sendTimeout:
-            code = TIME_OUT;
+            code = timeOut;
             msg = "請求超時";
             break;
           case DioErrorType.receiveTimeout:
-            code = TIME_OUT;
+            code = timeOut;
             msg = "響應超時";
             break;
           case DioErrorType.response:
             msg = "響應报文异常";
             break;
           case DioErrorType.other:
-            code = TIME_OUT;
+            code = timeOut;
             msg = "網絡異常";
             break;
         }
