@@ -1,4 +1,5 @@
 import 'package:common/base/mvvm/vm/base_view_model.dart';
+import 'package:common/common/log/a_logger.dart';
 import 'package:common/common/top.dart';
 
 class BaseController extends BaseViewModel {
@@ -14,4 +15,10 @@ class BaseController extends BaseViewModel {
   void showError(String? message) {
     showToast(message);
   }
+
+  @override
+  void handleServerError(String? message) {
+    logE(message);
+  }
+
 }

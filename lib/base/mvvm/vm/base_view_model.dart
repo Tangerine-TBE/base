@@ -21,6 +21,9 @@ abstract class BaseViewModel extends GetxController
   /// 頁面狀態 - 錯誤
   void showError(String? message);
 
+  /// 远程错误 - 500 默认调用showError错误
+  void handleServerError(String? message) => showError(message);
+
   /// 401 403 token過期/更新，需要重新登錄
   void handleUnAuthorizedError();
 
@@ -145,7 +148,6 @@ abstract class BaseViewModel extends GetxController
 
   /// 500 服務器錯誤
   void _handleServerError(String? msg) {
-    // toast is enough
-    showError("服務器發生錯誤:500,\nmessage:$msg");
+    handleServerError(msg);
   }
 }
