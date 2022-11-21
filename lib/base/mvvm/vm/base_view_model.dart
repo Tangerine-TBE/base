@@ -13,7 +13,8 @@ import '../repo/api_repository.dart';
 abstract class BaseViewModel extends GetxController
     with WidgetsBindingObserver, NavigationHelper {
   /// 頁面狀態 - loading
-  void showLoading() => GLoading.instance.showLoading();
+  void showLoading({bool userInteraction = true}) =>
+      GLoading.instance.showLoading(userInteraction);
 
   /// 頁面狀態 - 空
   void showEmpty();

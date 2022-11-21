@@ -36,8 +36,8 @@ class GLoading extends ILoading {
   }
 
   @override
-  void showLoading() {
-    _proxy.showLoading();
+  void showLoading(bool userInteraction) {
+    _proxy.showLoading(userInteraction);
   }
 
   @override

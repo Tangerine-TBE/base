@@ -17,5 +17,4 @@ class AppBarPageController extends BaseController {
     await apiLaunch(() => _menuRepo.fetchProfile());
     logW("response: ${holder?.dataList}");
   }
-
 }

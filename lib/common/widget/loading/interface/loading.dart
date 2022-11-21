@@ -5,7 +5,7 @@ abstract class ILoading {
 
   void install(Widget loadingWidget);
 
-  void showLoading();
+  void showLoading(bool userInteraction);
 
   void dismiss();
 

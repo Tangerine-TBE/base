@@ -26,8 +26,17 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
     return Container(
       color: Colors.orangeAccent,
       alignment: Alignment.center,
-      child: const Text("自带appbar的page演示"),
+      child: Column(
+        children: [
+          const Text("自带appbar的page演示"),
+          ElevatedButton(
+            onPressed: () {
+              controller.showLoading(userInteraction: false);
+            },
+            child: const Text("测试loading"),
+          ),
+        ],
+      ),
     );
   }
-
 }
