@@ -1,13 +1,15 @@
 library api_service;
 
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 
 import '../../../common/network/dio_client.dart';
 import 'dio_proxy.dart';
 
-
 // beans
 part '../model/data_holder.dart';
+
 part '../model/local_model.dart';
 
 /// 网络请求隔离层，目的是不暴露诸如TesoHttp、Http具体的请求实现给上层业务
@@ -38,6 +40,25 @@ abstract class ApiRepository {
     );
   }
 
+  /// 单文件上传 bytes形式
+  Future<AResponse<F>> uploadFileBytes<F>({
+    required String url,
+    required String formDataKey,
+    required ByteData byteData,
+    Function(dynamic data)? format,
+    Function(int sent, int total)? progressListener,
+  }) {
+    var futureTask = proxy.uploadFileBytes(
+      url: url,
+      formDataKey: formDataKey,
+      byteData: byteData,
+      progressListener: progressListener,
+    );
+    return AResponse.convert<F>(
+      () => futureTask,
+      (data) => format?.call(data),
+    );
+  }
 
   /// 单文件上传
   Future<AResponse<F>> uploadFile<F>({
@@ -56,8 +77,8 @@ abstract class ApiRepository {
     );
 
     return AResponse.convert<F>(
-          () => futureTask,
-          (data) => format?.call(data),
+      () => futureTask,
+      (data) => format?.call(data),
     );
   }
 
@@ -76,8 +97,8 @@ abstract class ApiRepository {
       progressListener: progressListener,
     );
     return AResponse.convert<F>(
-          () => futureTask,
-          (data) => format?.call(data),
+      () => futureTask,
+      (data) => format?.call(data),
     );
   }
 
