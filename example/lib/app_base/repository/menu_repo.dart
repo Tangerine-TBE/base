@@ -5,10 +5,10 @@ class MenuRepo extends BaseRepo {
   /// 获取菜单状态Status
   Future<AResponse<MenuStatusBeanHolder>> fetchProfile() {
     return requestOnFuture(
-      Api.menuStatus,
-      method: Method.get,
+      Api.verificationCode,
+      method: Method.post,
       params: {
-        'id': 'stub', // 显示传参 占个位
+        'username': 'username',
       },
       format: (data) => MenuStatusBeanHolder.fromMap(data),
     );

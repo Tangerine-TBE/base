@@ -69,11 +69,11 @@ class AResponse<T> {
   ) {
     Map<String, dynamic> map = jsonDecode(dioResponse.data!);
     var code = map["code"] ?? dioResponse.statusCode;
-    var message = map["message"] ?? dioResponse.statusMessage;
+    var message = map["message"] ?? map["msg"] ?? dioResponse.statusMessage;
     var data = map["data"] ?? map; // data 可能是List 或 Object 或 基本數據類型（bool）
     logger.w(
         ("---> header status code: ${dioResponse.statusCode}, message: ${dioResponse.statusMessage}"));
-    logger.i("----> body response: code[$code], || "
+    logger.i("---> response: code[$code], || "
         "msg:[$message] || ,\n "
         "${const JsonEncoder.withIndent('  ').convert(data)}");
     return AResponse(
