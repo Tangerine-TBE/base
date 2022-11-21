@@ -1,9 +1,11 @@
 library network;
 
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:common/common/top.dart';
 import 'package:dio/adapter.dart';
+
 // import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
@@ -52,6 +54,23 @@ abstract class DioClient {
     // else if (httpClientAdapter is BrowserHttpClientAdapter) {
     //   // TODO 浏览器adapter
     // }
+  }
+
+  /// 单文件上传，ByteData形式
+  Future<Response<String>> uploadFileBytes({
+    required String url,
+    required String formDataKey,
+    required ByteData byteData,
+    Function(int sent, int total)? progressListener,
+  }) async {
+    List<int> fileData = byteData.buffer.asUint8List();
+    MultipartFile file = MultipartFile.fromBytes(fileData);
+    FormData formData = FormData.fromMap({formDataKey: file});
+    return await _dio.post(
+      url,
+      data: formData,
+      onSendProgress: progressListener,
+    );
   }
 
   /// 单文件上传
