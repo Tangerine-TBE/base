@@ -26,7 +26,8 @@ class EasyLoadingImpl extends ILoading {
   }
 
   @override
-  void showLoading() {
+  void showLoading(bool userInteraction) {
+    EasyLoading.instance.userInteractions = userInteraction;
     EasyLoading.show();
   }
 
