@@ -72,8 +72,8 @@ class AResponse<T> {
     var message = map["message"] ?? dioResponse.statusMessage;
     var data = map["data"] ?? map; // data 可能是List 或 Object 或 基本數據類型（bool）
     logger.w(
-        ("--- 注意response.code: ${dioResponse.statusCode}, response.message: ${dioResponse.statusMessage}"));
-    logger.i("---- Evan =====> response: code[$code], || "
+        ("---> header status code: ${dioResponse.statusCode}, message: ${dioResponse.statusMessage}"));
+    logger.i("----> body response: code[$code], || "
         "msg:[$message] || ,\n "
         "${const JsonEncoder.withIndent('  ').convert(data)}");
     return AResponse(

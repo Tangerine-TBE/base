@@ -61,10 +61,11 @@ abstract class DioClient {
     required String url,
     required String formDataKey,
     required ByteData byteData,
+    String? filename,
     Function(int sent, int total)? progressListener,
   }) async {
     List<int> fileData = byteData.buffer.asUint8List();
-    MultipartFile file = MultipartFile.fromBytes(fileData);
+    MultipartFile file = MultipartFile.fromBytes(fileData, filename: filename);
     FormData formData = FormData.fromMap({formDataKey: file});
     return await _dio.post(
       url,
