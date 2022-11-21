@@ -46,12 +46,14 @@ abstract class ApiRepository {
     required String formDataKey,
     required ByteData byteData,
     Function(dynamic data)? format,
+    String? filename,
     Function(int sent, int total)? progressListener,
   }) async {
     var futureTask = proxy.uploadFileBytes(
       url: url,
       formDataKey: formDataKey,
       byteData: byteData,
+      filename: filename,
       progressListener: progressListener,
     );
     return AResponse.convert<F>(
