@@ -35,5 +35,6 @@ abstract class DataHolder<T> {
   }
 
   /// 檢查空數據
-  bool isEmpty();
+  bool isEmpty() =>
+      (dataList == null || dataList?.isEmpty == true) && data == null;
 }

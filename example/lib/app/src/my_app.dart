@@ -44,11 +44,11 @@ class MyApp extends BaseMaterialApp<BaseSampleLauncherStrategy> {
     BuildConfig.proxyPort = proxyPort;
   }
 
-  @override
-  GetMaterialApp? buildApp(BuildContext context, Widget? child) => null;
-// GetMaterialApp(
-//   getPages: route.getPages(),
-//   initialRoute: route.initialRoute,
-//   defaultTransition: Transition.rightToLeftWithFade,
-// );
+  // @override
+  // GetMaterialApp buildApp(BuildContext context, Widget? child) =>
+  //     GetMaterialApp(
+  //       getPages: route.getPages(),
+  //       initialRoute: route.initialRoute,
+  //       defaultTransition: Transition.rightToLeftWithFade,
+  //     );
 }
