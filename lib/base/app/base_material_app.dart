@@ -26,7 +26,17 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
   late ARoute route;
 
   /// material app
-  GetMaterialApp? buildApp(BuildContext context, Widget? child);
+  GetMaterialApp buildApp(BuildContext context, Widget? child) =>
+      GetMaterialApp(
+        builder: (context, child) {
+          // 安装loading
+          child = GLoading.instance.init(context, child);
+          return child;
+        },
+        getPages: route.getPages(),
+        initialRoute: route.initialRoute,
+        defaultTransition: Transition.rightToLeftWithFade,
+      );
 
   /// 环境变量配置交给客户端处理
   void buildConfig(T launcherStrategy);
@@ -46,18 +56,7 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
   @override
   Widget build(BuildContext context) {
     widget ??= ScreenUtilInit(
-      builder: (context, child) =>
-          buildApp(context, child) ??
-          GetMaterialApp(
-            builder: (context, child) {
-              // 安装loading
-              child = GLoading.instance.init(context, child);
-              return child;
-            },
-            getPages: route.getPages(),
-            initialRoute: route.initialRoute,
-            defaultTransition: Transition.rightToLeftWithFade,
-          ),
+      builder: (context, child) => buildApp(context, child),
       //设计图尺寸
       // designSize: Size(
       //     GeneralConstant.DESIGN_WIDTH, GeneralConstant.DESIGN_HEIGHT,));
