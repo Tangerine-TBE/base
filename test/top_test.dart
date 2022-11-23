@@ -4,13 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test("get value via .value ext", () {
     num zero = 0;
-    expect(0, zero.value);
+    expect(0, zero.val);
     num? nullNum;
-    expect(0, nullNum.value);
+    expect(0, nullNum.val);
 
     bool? bol;
-    expect(false, bol.value);
+    expect(false, bol.val);
     bool? t = true;
-    expect(true, t.value);
+    expect(true, t.val);
   });
 }

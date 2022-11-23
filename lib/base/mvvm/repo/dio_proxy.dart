@@ -20,7 +20,7 @@ abstract class DioProxy extends DioClient {
   List<dio.Interceptor> loadInterceptors();
 
   @override
-  DioOptions loadOptions() => DioOptions(
+  DioConfig loadOptions() => DioConfig(
         host: host,
         proxy: proxy,
         proxyPort: proxyPort,
