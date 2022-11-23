@@ -42,7 +42,6 @@ class NoBorderTextField extends StatelessWidget {
         hintStyle: TextStyle(
           color: Colors.white38,
           fontSize: 14.w,
-          fontFamily: 'GenSen',
         ),
         border: InputBorder.none,
         // enabledBorder: const OutlineInputBorder(
@@ -64,7 +63,6 @@ class NoBorderTextField extends StatelessWidget {
       style: TextStyle(
         fontSize: 14.w,
         color: Colors.white,
-        fontFamily: 'GenSen',
       ),
     );
   }
