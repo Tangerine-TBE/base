@@ -45,7 +45,7 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
   /// 可重写
   void init() {
     // 安装默认logger
-    installLogger();
+    installLogger(launcherStrategy.isDebug);
 
     // 构建环境变量
     buildConfig(launcherStrategy);
