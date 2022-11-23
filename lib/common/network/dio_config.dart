@@ -1,12 +1,14 @@
 part of network;
 
-class DioOptions extends BaseOptions {
-  DioOptions({
+class DioConfig extends BaseOptions {
+  DioConfig({
     required this.host,
     this.proxy,
     this.proxyPort,
     this.header,
     this.interceptors,
+    this.pem,
+    this.pemFilepath,
   }) : super(
           baseUrl: host,
           connectTimeout: 30 * 1000,
@@ -20,4 +22,6 @@ class DioOptions extends BaseOptions {
   final String? proxyPort;
   final Map<String, dynamic>? header;
   final List<Interceptor>? interceptors;
+  final String? pem; // https requires pem string or ↓
+  final String? pemFilepath; // pem file path in project for https
 }

@@ -24,11 +24,11 @@ enum Method { get, post, put, delete }
 
 /// 封裝 - 初始化入口install()
 abstract class DioClient {
-  late DioOptions config = loadOptions();
+  late DioConfig config = loadOptions();
 
   late Dio _dio;
 
-  DioOptions loadOptions();
+  DioConfig loadOptions();
 
   /// 初始化_dio
   void install() {
@@ -36,24 +36,47 @@ abstract class DioClient {
     _dio.interceptors
       ..add(LogInterceptor(requestBody: true, responseBody: true))
       ..addAll(config.interceptors ?? []);
-    //SSL证书
+    // SSL证书
     HttpClientAdapter httpClientAdapter = _dio.httpClientAdapter;
-    if (httpClientAdapter is DefaultHttpClientAdapter) {
-      // 客户端adapter
-      httpClientAdapter.onHttpClientCreate = (client) {
-        //忽略SSL验证--待封装SSL证书
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-        //代理
-        if (!config.proxy.isNullOrEmpty) {
-          client.findProxy =
-              (uri) => "PROXY ${config.proxy}:${config.proxyPort}";
-        }
-      };
+    if (httpClientAdapter is DefaultHttpClientAdapter) { // 1. pem string
+      if (!config.pem.isNullOrEmpty) {
+        httpClientAdapter.onHttpClientCreate = (client) {
+          client.badCertificateCallback =
+              (X509Certificate cert, String host, int port) =>
+                  cert.pem == config.pem.val;
+          //代理
+          _appendProxy(client);
+        };
+      } else if (!config.pemFilepath.isNullOrEmpty) {
+        httpClientAdapter.onHttpClientCreate = (client) { // 2. pem file
+          SecurityContext sc = SecurityContext();
+          // file is the path of certificate
+          sc.setTrustedCertificates(config.pemFilepath.val);
+          HttpClient httpClient = HttpClient(context: sc);
+          //代理
+          _appendProxy(httpClient);
+          return httpClient;
+        };
+      } else {
+        httpClientAdapter.onHttpClientCreate = (client) { // 3. no verification
+          client.badCertificateCallback =
+              (X509Certificate cert, String host, int port) => true;
+          // 代理
+          _appendProxy(client);
+        };
+      }
     }
     // else if (httpClientAdapter is BrowserHttpClientAdapter) {
     //   // TODO 浏览器adapter
     // }
+  }
+
+  _appendProxy(HttpClient httpClient) {
+    //代理
+    if (!config.proxy.isNullOrEmpty) {
+      httpClient.findProxy =
+          (uri) => "PROXY ${config.proxy}:${config.proxyPort}";
+    }
   }
 
   /// 单文件上传，ByteData形式
