@@ -1,8 +1,8 @@
 import 'package:common/common/startup/dispatcher.dart';
 
-abstract class Startup extends Dispatcher {
+abstract class Startup with Dispatcher {
   /// 创建任务
-  bool create();
+  Future<bool> create();
 
   /// 名称
   String get name;

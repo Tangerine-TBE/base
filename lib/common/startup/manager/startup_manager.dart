@@ -29,15 +29,17 @@ class StartupManager {
     _startupStore.print();
 
     // 4. 执行
-    // 4.1 执行自由表
+    // 4.1 执行依赖表
+    _startupStore.dependencyMap.forEach((parent, children) {
+      DependencyStartupRunner(
+        this,
+        startup: _startupMap[parent]!,
+      ).run();
+    });
+    // 4.2 执行自由表
     for (var freeStartup in _startupStore.freeStartups) {
       freeStartup.create();
     }
-    // 4.2 执行依赖表
-    DependencyStartupRunner(
-      this,
-      startup: _startupMap[_startupStore.first()]!,
-    ).run();
   }
 
   StartupStore _sort() {
@@ -80,7 +82,7 @@ class StartupManager {
   }
 
   /// 执行子任务
-  void notifyChildren(String parent) {
+  notifyChildren(String parent) {
     List<String>? children = _startupStore.dependencyMap[parent];
     children?.forEach((child) {
       DependencyStartupRunner(this, startup: _startupMap[child]!).run();

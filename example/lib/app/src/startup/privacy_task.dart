@@ -10,12 +10,10 @@ class PrivacyTask extends FlutterStartup {
   String get name => key;
 
   @override
-  bool create() {
+  Future<bool> create() async {
     // TODO show privacy dialog
-    logW('show privacy confirm dialog and pressed yes..');
-    return true;
+    logW('start up $key');
+    await Future.delayed(const Duration(seconds: 3));
+    return Future.value(true);
   }
-
-  @override
-  int get priority => 999;
 }

@@ -13,10 +13,13 @@ class DependencyStartupRunner {
   final Startup startup;
   final StartupManager manager;
 
-  void run() {
+  void run() async {
     // 1. run self
-    bool result = startup.create();
-    logD("result: ${result}");
+    var startAt = DateTime.now();
+    bool result = await startup.create();
+    var endAt = DateTime.now();
+    logV(
+        "${startup.name} finish --> result: $result, time used: ${endAt.difference(startAt).inMilliseconds}");
 
     // 2. find children
     manager.notifyChildren(startup.name);

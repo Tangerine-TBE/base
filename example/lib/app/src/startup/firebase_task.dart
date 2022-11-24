@@ -3,16 +3,16 @@ import 'package:common/common/startup/flutter_startup.dart';
 
 import 'privacy_task.dart';
 
-class DataBaseTask extends FlutterStartup {
-  static String key = 'DataBaseTask';
+class FireBaseTask extends FlutterStartup {
+  static String key = 'FireBaseTask';
 
   @override
   String get name => key;
 
   @override
   Future<bool> create() async {
-    logW("start up DataBaseTask...");
-    await Future.delayed(const Duration(seconds: 1));
+    logW("start up FireBaseTask...");
+    await Future.delayed(const Duration(seconds: 2));
     return Future.value(true);
   }
 

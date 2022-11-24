@@ -11,29 +11,29 @@ class StartupStore {
     this.freeStartups,
   );
 
-  /// 执行优先级
+  /// 执行优先级 {startup: priority}
   Map<String, int> priorityMap = {};
 
-  /// startup依赖关系表
+  /// startup依赖关系表 {parent : children}
   Map<String, List<String>> dependencyMap = {};
 
   /// 可自由初始化的startup
   List<Startup> freeStartups = [];
 
   /// find the first startup name
-  String first() {
+  String topNode() {
     int maxNum = -1;
-    priorityMap.forEach((key, value) {
-      maxNum = max(maxNum, value);
-    });
+    for (var parent in dependencyMap.keys) {
+      maxNum = max(maxNum, priorityMap[parent] ?? -1);
+    }
     return priorityMap.entries
         .firstWhere((element) => element.value == maxNum)
         .key;
   }
 
   void print() {
-    logI("priorityMap: ${priorityMap}\n"
-        "dependencyMap: ${dependencyMap}\n"
-        "freeStartups: ${freeStartups}");
+    logV("优先级: $priorityMap\n"
+        "依赖关系表: $dependencyMap\n"
+        "自由表: $freeStartups");
   }
 }

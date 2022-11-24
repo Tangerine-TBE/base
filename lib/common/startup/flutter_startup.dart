@@ -6,6 +6,6 @@ abstract class FlutterStartup extends Startup {
   int get priority => 1;
 
   @override
-  bool get callCreateOnMainThread => false;
+  bool get callCreateOnMainThread => true;
 
 }
