@@ -13,10 +13,10 @@ class RouteConfig extends ARoute {
 
   @override
   List<GetPage> getPages() => [
-        GetPage(
+        GetPage<dynamic>(
           name: RouteName.home,
-          page: () => const HomePage(),
-          binding: BindingsBuilder(() {
+          page: () =>  HomePage(),
+          binding: BindingsBuilder<HomePageController>(() {
             Get.lazyPut(() => HomePageController());
           }),
         ),

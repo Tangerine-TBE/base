@@ -1,8 +1,6 @@
 import 'package:common/base/app/base_material_app.dart';
 import 'package:common/base/route/a_route.dart';
 import 'package:common/common/log/a_logger.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../app_base/config/build_config.dart';
 import '../../app_base/config/user.dart';
@@ -21,9 +19,7 @@ class MyApp extends BaseMaterialApp<BaseSampleLauncherStrategy> {
   void init() {
     super.init();
     // 初始化项目自身业务，比如登录状态token等
-    logI("do your initialization");
     BuildConfig.token = 'your token';
-
     logI("check login status: ${User.isLogin}");
   }
 

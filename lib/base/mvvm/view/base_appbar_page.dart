@@ -20,10 +20,10 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   Widget? buildRightIcon() => const Icon(Icons.menu_rounded);
 
   /// 左边按钮点击
-  onTapLeft() => finish();
+  void onTapLeft() => finish();
 
   /// 右边按钮点击
-  onTapRight(BuildContext context) => {};
+  void onTapRight(BuildContext context) => {};
 
   @override
   Widget? buildDrawer() => null;
