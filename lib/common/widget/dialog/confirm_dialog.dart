@@ -7,7 +7,8 @@ class ConfirmDialog extends AlertDialog {
     Widget? title,
     Color? backgroundColor,
     required Widget content,
-    required Function confirm,
+    required Future<bool> Function() shouldCloseOnConfirm,
+    required Function onConfirm,
   }) : super(
           key: key,
           backgroundColor: backgroundColor ?? const Color(0xFF212121),
@@ -28,9 +29,13 @@ class ConfirmDialog extends AlertDialog {
               ),
             ),
             TextButton(
-              onPressed: () {
-                confirm.call();
-                Get.back();
+              onPressed: () async {
+                // callback
+                bool dismiss = await shouldCloseOnConfirm.call() == true;
+                if (dismiss) {
+                  Get.back(result: true);
+                  onConfirm.call();
+                }
               },
               child: const Text(
                 "確認",

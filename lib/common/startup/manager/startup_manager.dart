@@ -1,15 +1,20 @@
 import 'dart:collection';
 
 import 'package:common/common/log/a_logger.dart';
-import 'package:common/common/startup/manager/dependency_startup_runner.dart';
+import 'package:common/common/startup/runner/dependency_startup_runner.dart';
+import 'package:common/common/startup/runner/free_startup_runner.dart';
 import 'package:common/common/top.dart';
+import 'package:flutter/material.dart';
 
 import '../startup.dart';
 
 import '../store/startup_store.dart';
 
 class StartupManager {
-  StartupManager(this._startupMap);
+  StartupManager(this.context, this._startupMap);
+
+  /// 上下文
+  final BuildContext context;
 
   /// startup 实例映射存储
   final Map<String, Startup> _startupMap;
@@ -33,12 +38,17 @@ class StartupManager {
     _startupStore.dependencyMap.forEach((parent, children) {
       DependencyStartupRunner(
         this,
+        context: context,
         startup: _startupMap[parent]!,
       ).run();
     });
     // 4.2 执行自由表
     for (var freeStartup in _startupStore.freeStartups) {
-      freeStartup.create();
+      FreeStartupRunner(
+        this,
+        context: context,
+        startup: freeStartup,
+      ).run();
     }
   }
 
@@ -85,7 +95,11 @@ class StartupManager {
   notifyChildren(String parent) {
     List<String>? children = _startupStore.dependencyMap[parent];
     children?.forEach((child) {
-      DependencyStartupRunner(this, startup: _startupMap[child]!).run();
+      DependencyStartupRunner(
+        this,
+        context: context,
+        startup: _startupMap[child]!,
+      ).run();
     });
   }
 }

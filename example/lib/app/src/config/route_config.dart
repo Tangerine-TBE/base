@@ -15,7 +15,7 @@ class RouteConfig extends ARoute {
   List<GetPage> getPages() => [
         GetPage<dynamic>(
           name: RouteName.home,
-          page: () => const HomePage(),
+          page: () =>  HomePage(),
           binding: BindingsBuilder<HomePageController>(() {
             Get.lazyPut(() => HomePageController());
           }),

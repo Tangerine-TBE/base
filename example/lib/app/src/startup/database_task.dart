@@ -1,5 +1,6 @@
 import 'package:common/common/log/a_logger.dart';
 import 'package:common/common/startup/flutter_startup.dart';
+import 'package:flutter/material.dart';
 
 import 'privacy_task.dart';
 
@@ -10,7 +11,7 @@ class DataBaseTask extends FlutterStartup {
   String get name => key;
 
   @override
-  Future<bool> create() async {
+  Future<bool> create(BuildContext context) async {
     logW("start up DataBaseTask...");
     await Future.delayed(const Duration(seconds: 1));
     return Future.value(true);

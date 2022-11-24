@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:common/common/log/a_logger.dart';
 import 'package:common/common/startup/flutter_startup.dart';
+import 'package:flutter/material.dart';
+import 'package:common/common/top.dart';
 
 class PrivacyTask extends FlutterStartup {
   static String key = 'PrivacyTask';
@@ -10,10 +12,22 @@ class PrivacyTask extends FlutterStartup {
   String get name => key;
 
   @override
-  Future<bool> create() async {
-    // TODO show privacy dialog
+  Future<bool> create(BuildContext context) async {
     logW('start up $key');
-    await Future.delayed(const Duration(seconds: 3));
-    return Future.value(true);
+
+    // 模拟隐私协议对话框
+    bool? result = await showConfirmCancelDialog(
+      context,
+      title: '注意',
+      content: '请同意隐私协议以进行软件sdk初始化',
+      shouldCloseOnConfirm: () async {
+        return true;
+      },
+      onConfirm: () {
+        logV("对话框关闭");
+      },
+    );
+
+    return result ?? false;
   }
 }
