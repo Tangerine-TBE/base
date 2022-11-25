@@ -45,6 +45,7 @@ common:
     - launcher // 启动策略
     - log // 日志工具
     - network // 网络请求工具
+    - startup // 启动任务初始化工具
 
 > 架构封装并非简单抽取，应尽可能使用ioc技术，聚焦管理抽象依赖
 
@@ -87,3 +88,20 @@ MVVM架构，abstract类居多，可供客户端拓展
 #### 3.3 route
 
 基于GetPage，规定了客户端路由配置模板
+
+### 4. /lib/common 说明
+
+#### 4.1 startup 启动任务
+
+使用时，需要继承`FlutterStartup`，
+
+> 具体案例参考 `example/lib/app/src/config/startup_config.dart`
+
+```dart
+// 由于依赖BuildContext
+// 需要等待页面build完毕，执行startup
+// 例如在app首次启动页面的构造函数中，调用下面代码
+WidgetsBinding.instance.addPostFrameCallback((_) {
+  StartupManager(Get.context!, startupMap).start();
+});
+```

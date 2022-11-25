@@ -43,7 +43,7 @@ class StartupManager {
       ).run();
     });
     // 4.2 执行自由表
-    for (var freeStartup in _startupStore.freeStartups) {
+    for (Startup freeStartup in _startupStore.freeStartups) {
       FreeStartupRunner(
         this,
         context: context,
