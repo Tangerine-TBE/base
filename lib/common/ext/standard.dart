@@ -1,4 +1,4 @@
-part of common_top;
+import 'package:get/get_utils/src/get_utils/get_utils.dart';
 
 extension StringExt on String? {
   String get val => isNullOrEmpty ? '' : this!;

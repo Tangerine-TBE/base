@@ -1,29 +1,28 @@
-library common_top;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 
-part 'ext/standard.dart';
+import 'top.dart';
 
-part 'widget/checkbox/stateful_check_box.dart';
-
-part 'widget/checkbox/stateful_checkbox_group.dart';
-
-part 'widget/dialog/a_image_picker.dart';
-
-part 'widget/dialog/confirm_dialog.dart';
-
-// parts
-part 'widget/text/no_border_text_field.dart';
+export 'ext/standard.dart';
+export 'widget/checkbox/stateful_check_box.dart';
+export 'widget/checkbox/stateful_checkbox_group.dart';
+export 'widget/dialog/a_image_picker.dart';
+export 'widget/dialog/confirm_dialog.dart';
+export 'widget/text/no_border_text_field.dart';
 
 /// 弹出toast
 /// 默认样式
 showToast(String? msg) {
-  Fluttertoast.showToast(msg: msg ?? "");
+  if (Get.context != null) {
+    GFToast.showToast(
+      msg ?? '',
+      Get.context!,
+      toastPosition: GFToastPosition.BOTTOM,
+    );
+  }
 }
 
 /// 打开 取消 - 确认 对话框
