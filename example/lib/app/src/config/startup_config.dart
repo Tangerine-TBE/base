@@ -1,9 +1,9 @@
 import 'package:common/common/startup/startup.dart';
-import 'package:example/app/src/startup/firebase_task.dart';
-import 'package:example/app/src/startup/free_init_task2.dart';
 
 import '../startup/database_task.dart';
+import '../startup/firebase_task.dart';
 import '../startup/free_init_task1.dart';
+import '../startup/free_init_task2.dart';
 import '../startup/privacy_task.dart';
 
 /// 启动任务表
