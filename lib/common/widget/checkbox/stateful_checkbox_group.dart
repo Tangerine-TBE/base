@@ -1,4 +1,7 @@
-part of common_top;
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'stateful_check_box.dart';
 
 /// 为一组stateful checkbox实现互斥效果
 class StatefulCheckboxGroup extends StatefulWidget {
@@ -54,10 +57,10 @@ class _StatefulCheckboxGroupState extends State<StatefulCheckboxGroup> {
   }
 
   List<StatefulCheckbox> _buildCheckboxes() {
-    List<StatefulCheckbox> _checkboxList = [];
+    List<StatefulCheckbox> checkboxList = [];
     widget.strings.asMap().forEach((index, value) {
       /// 组件
-      _checkboxList.add(
+      checkboxList.add(
         StatefulCheckbox(
           key: ValueKey<num>(index),
           size: widget.size,
@@ -78,6 +81,6 @@ class _StatefulCheckboxGroupState extends State<StatefulCheckboxGroup> {
         ),
       );
     });
-    return _checkboxList;
+    return checkboxList;
   }
 }

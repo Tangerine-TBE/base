@@ -1,4 +1,5 @@
-part of common_top;
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 不带边框的输入框
 class NoBorderTextField extends StatelessWidget {
