@@ -38,6 +38,7 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
         defaultTransition: Transition.rightToLeftWithFade,
       );
 
+
   /// 环境变量配置交给客户端处理
   void buildConfig(T launcherStrategy);
 
