@@ -26,6 +26,10 @@ abstract class BaseLauncherPage<C> extends BaseGradientPage<C> {
   @override
   Widget? buildDrawer() => null;
 
+  @override
+  Widget? buildBottomNavigation() => null;
+
+
   Map<String, Startup>? loadStartups();
 
 }

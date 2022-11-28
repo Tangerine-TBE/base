@@ -34,6 +34,9 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   @override
   Widget? buildBottomNavigation() => null;
 
+  @override
+  Widget? buildFloatingActionButton() => null;
+
   /// 自定义AppBar (leading & actions)
   AppBar _customAppBar() {
     return AppBar(
