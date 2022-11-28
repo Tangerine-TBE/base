@@ -14,6 +14,9 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   /// 构建drawer
   Widget? buildDrawer();
 
+  /// 构建bottomNavigation
+  Widget? buildBottomNavigation();
+
   /// 主视图区域
   Widget buildContent(BuildContext context);
 
@@ -44,6 +47,8 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         appBar: buildAppBar(),
         // draw
         drawer: buildDrawer(),
+        // bottom
+        bottomNavigationBar: buildBottomNavigation(),
         resizeToAvoidBottomInset: false,
         body: Builder(
           builder: (context) => buildBody(context),
