@@ -1,6 +1,7 @@
 import 'package:common/base/app/base_material_app.dart';
 import 'package:common/base/route/a_route.dart';
 import 'package:common/common/log/a_logger.dart';
+import 'package:common/common/startup/startup.dart';
 
 import '../../app_base/config/build_config.dart';
 import '../../app_base/config/user.dart';
@@ -40,11 +41,11 @@ class MyApp extends BaseMaterialApp<BaseSampleLauncherStrategy> {
     BuildConfig.proxyPort = proxyPort;
   }
 
-  // @override
-  // GetMaterialApp buildApp(BuildContext context, Widget? child) =>
-  //     GetMaterialApp(
-  //       getPages: route.getPages(),
-  //       initialRoute: route.initialRoute,
-  //       defaultTransition: Transition.rightToLeftWithFade,
-  //     );
+// @override
+// GetMaterialApp buildApp(BuildContext context, Widget? child) =>
+//     GetMaterialApp(
+//       getPages: route.getPages(),
+//       initialRoute: route.initialRoute,
+//       defaultTransition: Transition.rightToLeftWithFade,
+//     );
 }
