@@ -20,6 +20,9 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   /// 构建floatingAction
   Widget? buildFloatingActionButton();
 
+  /// floatingActionButton位置
+  FloatingActionButtonLocation? get floatingActionButtonLocation;
+
   /// 主视图区域
   Widget buildContent(BuildContext context);
 
@@ -54,6 +57,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         bottomNavigationBar: buildBottomNavigation(),
         // floating action
         floatingActionButton: buildFloatingActionButton(),
+        floatingActionButtonLocation: floatingActionButtonLocation,
         resizeToAvoidBottomInset: false,
         body: Builder(
           builder: (context) => buildBody(context),

@@ -12,6 +12,9 @@ abstract class BaseGradientPage<C> extends BaseView<C> {
   Widget? buildFloatingActionButton() => null;
 
   @override
+  FloatingActionButtonLocation? get floatingActionButtonLocation => null;
+
+  @override
   Widget buildBody(BuildContext context) => Stack(
         children: [
           // 渐变层mask

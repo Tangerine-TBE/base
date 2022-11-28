@@ -37,6 +37,9 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   @override
   Widget? buildFloatingActionButton() => null;
 
+  @override
+  FloatingActionButtonLocation? get floatingActionButtonLocation => null;
+
   /// 自定义AppBar (leading & actions)
   AppBar _customAppBar() {
     return AppBar(
