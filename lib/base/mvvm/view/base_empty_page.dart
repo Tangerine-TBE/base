@@ -1,7 +1,7 @@
 import 'package:common/base/mvvm/view/base_view.dart';
 import 'package:flutter/material.dart';
 
-abstract class BaseEmptyPage extends BaseView {
+abstract class BaseEmptyPage<C> extends BaseView<C> {
   const BaseEmptyPage({Key? key}) : super(key: key);
 
   @override
