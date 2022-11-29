@@ -38,7 +38,8 @@ abstract class DioClient {
       ..addAll(config.interceptors ?? []);
     // SSL证书
     HttpClientAdapter httpClientAdapter = _dio.httpClientAdapter;
-    if (httpClientAdapter is DefaultHttpClientAdapter) { // 1. pem string
+    if (httpClientAdapter is DefaultHttpClientAdapter) {
+      // 1. pem string
       if (!config.pem.isNullOrEmpty) {
         httpClientAdapter.onHttpClientCreate = (client) {
           client.badCertificateCallback =
@@ -48,7 +49,8 @@ abstract class DioClient {
           _appendProxy(client);
         };
       } else if (!config.pemFilepath.isNullOrEmpty) {
-        httpClientAdapter.onHttpClientCreate = (client) { // 2. pem file
+        httpClientAdapter.onHttpClientCreate = (client) {
+          // 2. pem file
           SecurityContext sc = SecurityContext();
           // file is the path of certificate
           sc.setTrustedCertificates(config.pemFilepath.val);
@@ -58,7 +60,8 @@ abstract class DioClient {
           return httpClient;
         };
       } else {
-        httpClientAdapter.onHttpClientCreate = (client) { // 3. no verification
+        httpClientAdapter.onHttpClientCreate = (client) {
+          // 3. no verification
           client.badCertificateCallback =
               (X509Certificate cert, String host, int port) => true;
           // 代理
@@ -84,12 +87,14 @@ abstract class DioClient {
     required String url,
     required String formDataKey,
     required ByteData byteData,
+    Map<String, dynamic> body = const {},
     String? filename,
     Function(int sent, int total)? progressListener,
   }) async {
     List<int> fileData = byteData.buffer.asUint8List();
     MultipartFile file = MultipartFile.fromBytes(fileData, filename: filename);
-    FormData formData = FormData.fromMap({formDataKey: file});
+    body[formDataKey] = file;
+    FormData formData = FormData.fromMap(body);
     return await _dio.post(
       url,
       data: formData,

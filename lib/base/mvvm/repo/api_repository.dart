@@ -45,6 +45,7 @@ abstract class ApiRepository {
     required String url,
     required String formDataKey,
     required ByteData byteData,
+    Map<String, dynamic> body = const {},
     Function(dynamic data)? format,
     String? filename,
     Function(int sent, int total)? progressListener,
@@ -54,6 +55,7 @@ abstract class ApiRepository {
       formDataKey: formDataKey,
       byteData: byteData,
       filename: filename,
+      body: body,
       progressListener: progressListener,
     );
     return AResponse.convert<F>(

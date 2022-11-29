@@ -24,7 +24,6 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
   @override
   Widget buildContent(BuildContext context) {
     return Container(
-      color: Colors.orangeAccent,
       alignment: Alignment.center,
       child: Column(
         children: [

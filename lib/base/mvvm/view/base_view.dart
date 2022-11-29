@@ -30,10 +30,10 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   Widget buildContentCover(BuildContext context) => const Offstage();
 
   /// 纯色背景
-  Color get background => const Color.fromARGB(255, 33, 33, 33);
+  Color get background => Get.theme.primaryColor;
 
   /// 系统导航栏颜色
-  Color get systemNavigationBarColor => const Color.fromARGB(255, 33, 37, 42);
+  Color get systemNavigationBarColor => Get.theme.secondaryHeaderColor;
 
   /// 返回按钮点击
   Future<bool>? onBackPressed() => null;
