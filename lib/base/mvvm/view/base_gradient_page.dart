@@ -9,6 +9,12 @@ abstract class BaseGradientPage<C> extends BaseView<C> {
   List<Color>? get gradientColors => [Colors.redAccent, Colors.orangeAccent];
 
   @override
+  Widget? buildBottomNavigation() => null;
+
+  @override
+  Widget? buildDrawer() => null;
+
+  @override
   Widget? buildFloatingActionButton() => null;
 
   @override
