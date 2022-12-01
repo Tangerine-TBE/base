@@ -109,11 +109,55 @@ abstract class BaseViewModel extends GetxController
   ///        var r2 = await mineService.getR2();
   ///        var r3 = await mineService.getR3();
   ///     });
+  @Deprecated("废弃准备删除，无法支持异步请求")
   void apiAsync(Future Function() futureTask) async {
     resetShow();
     showLoading();
     await futureTask();
     dismiss();
+  }
+
+  /// 转换 AResponse -> 业务模型
+  /// 當需要多個請求同時發出時使用
+  /// @return 返回值是动态混合列表，需要开发者自行处理
+  /// 如：
+  ///     List<dynamic> results = await apiLaunchMany(() {
+  ///        mineService.getR1();
+  ///        mineService.getR2();
+  ///        mineService.getR3();
+  ///     });
+  Future<List<dynamic>> apiLaunchMany(
+    List<Future<AResponse<dynamic>>> futures, {
+    bool enableLoading = true,
+  }) async {
+    resetShow();
+    if (enableLoading) showLoading();
+    List<AResponse<dynamic>> responses = await Future.wait(futures);
+    if (enableLoading) dismiss();
+
+    List<dynamic> results = [];
+    bool isError = true; // 全部请求错误才算错误
+    for (var response in responses) {
+      if (response.isSuccess) isError = false;
+      // TODO ? 是否需要处理单独的响应状态码
+      var data = response.data;
+      if (data is DataHolder) {
+        results.add(data.dataList ?? data.data);
+      } else {
+        results.add(data);
+      }
+    }
+
+    if (isError) {
+      showError("请求失败");
+      return [];
+    }
+
+    if (results.isEmpty) {
+      showEmpty();
+    }
+
+    return results;
   }
 
   /// 錯誤代碼處理
