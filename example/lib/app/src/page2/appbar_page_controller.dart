@@ -18,4 +18,13 @@ class AppBarPageController extends BaseController {
     await apiLaunch(() => _menuRepo.fetchProfile());
     logW("response: ${holder?.dataList}");
   }
+
+  fetchMultiApis()  async {
+    var ss = await apiLaunchMany([
+      _menuRepo.fetchProfile(),
+      _menuRepo.fetchProfile(),
+      _menuRepo.fetchProfile(),
+    ]);
+    logW("apiLaunchMany results: $ss");
+  }
 }

@@ -18,7 +18,6 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
   @override
   onTapRight(BuildContext context) async {
     showToast("tap right");
-    await controller.fetchMenuStatus();
   }
 
   @override
@@ -33,6 +32,18 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
               controller.showLoading(userInteraction: false);
             },
             child: const Text("测试loading"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              controller.fetchMenuStatus();
+            },
+            child: const Text("测试单个请求"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              controller.fetchMultiApis();
+            },
+            child: const Text("测试多个请求"),
           ),
         ],
       ),

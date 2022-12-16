@@ -4,8 +4,8 @@ import 'package:common/common/top.dart';
 
 class BaseController extends BaseViewModel {
   @override
-  void handleUnAuthorizedError() {
-    showToast("401 or 403");
+  void handleUnAuthorizedError(String? message) {
+    showToast("401 or 403 : $message");
   }
 
   @override

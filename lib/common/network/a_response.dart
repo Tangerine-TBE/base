@@ -18,6 +18,9 @@ class AResponse<T> {
   // 是否請求成功
   bool get isSuccess => code == 200;
 
+  // 是否需要重新登录
+  bool get isUnAuthorized => code == 401 || code == 403;
+
   /// 對dio的Response進行JSON轉換
   static Future<AResponse<T>> convert<T>(
     Future<Response<String>> Function() futureTask,
