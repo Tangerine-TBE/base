@@ -5,7 +5,7 @@ class MenuRepo extends BaseRepo {
   /// 获取菜单状态Status
   Future<AResponse<MenuStatusBeanHolder>> fetchProfile() {
     return requestOnFuture(
-      Api.verificationCode,
+      Api.sampleUrl,
       method: Method.post,
       params: {
         'username': 'username',

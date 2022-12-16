@@ -26,7 +26,7 @@ abstract class BaseViewModel extends GetxController
   void handleServerError(String? message) => showError(message);
 
   /// 401 403 token過期/更新，需要重新登錄
-  void handleUnAuthorizedError();
+  void handleUnAuthorizedError(String? message);
 
   /// 頁面狀態 - 重置
   void resetShow() {}
@@ -136,11 +136,11 @@ abstract class BaseViewModel extends GetxController
     if (enableLoading) dismiss();
 
     List<dynamic> results = [];
-    bool isError = true; // 全部请求错误才算错误
+    List<AResponse> errors = []; // 错误响应的集合
+
     for (var response in responses) {
-      if (response.isSuccess) isError = false;
-      // TODO ? 是否需要处理单独的响应状态码
-      var data = response.data;
+      if (!response.isSuccess) errors.add(response);
+      dynamic data = response.data;
       if (data is DataHolder) {
         results.add(data.dataList ?? data.data);
       } else {
@@ -148,23 +148,31 @@ abstract class BaseViewModel extends GetxController
       }
     }
 
-    if (isError) {
-      showError("请求失败");
-      return [];
-    }
-
-    if (results.isEmpty) {
-      showEmpty();
+    if (errors.isNotEmpty) {
+      for (AResponse error in errors) {
+        bool isBreak =
+            _handleResponseError(error, breakOn: [unauthorized, forbidden]);
+        if (isBreak) break;
+      }
     }
 
     return results;
   }
 
   /// 錯誤代碼處理
-  void _handleResponseError(AResponse response) {
+  /// breakCode: 如果和请求code匹配，就返回true
+  bool _handleResponseError(
+    AResponse response, {
+    List<int> breakOn = const [],
+  }) {
     logE(
       "----- base_controller._handleResponseError(): code: ${response.code}, message: ${response.message}",
     );
+
+    // 是否需要打断处理
+    bool isBreak = false;
+
+    if (breakOn.contains(response.code)) isBreak = true;
 
     switch (response.code) {
       case clientError:
@@ -172,7 +180,7 @@ abstract class BaseViewModel extends GetxController
         break;
       case unauthorized:
       case forbidden:
-        handleUnAuthorizedError();
+        handleUnAuthorizedError(response.message);
         break;
       case timeOut:
         showError(response.message);
@@ -184,6 +192,7 @@ abstract class BaseViewModel extends GetxController
         showError(response.message);
         break;
     }
+    return isBreak;
   }
 
   /// 400 客户端错误

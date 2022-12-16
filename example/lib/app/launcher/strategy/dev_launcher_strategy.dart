@@ -9,7 +9,7 @@ class DevLauncherStrategy extends BaseSampleLauncherStrategy {
   String get host => "http://172.19.0.135:8082/bw-volunteer-api/";
 
   @override
-  String proxy = "172.19.8.151";
+  String proxy = "";
 
   @override
   String proxyPort = "8888";
