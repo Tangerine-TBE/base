@@ -26,7 +26,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   void onTapRight(BuildContext context) => {};
 
   @override
-  Widget? buildDrawer() => null;
+  Widget? buildDrawer(BuildContext context) => null;
 
   @override
   AppBar? buildAppBar() => _customAppBar();

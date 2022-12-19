@@ -12,7 +12,7 @@ abstract class BaseEmptyPage<C> extends BaseView<C> {
 
 
   @override
-  Widget? buildDrawer() => null;
+  Widget? buildDrawer(BuildContext context) => null;
 
   @override
   Widget? buildFloatingActionButton() => null;

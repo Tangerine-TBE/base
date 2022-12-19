@@ -24,7 +24,7 @@ abstract class BaseLauncherPage<C> extends BaseGradientPage<C> {
   AppBar? buildAppBar() => null;
 
   @override
-  Widget? buildDrawer() => null;
+  Widget? buildDrawer(BuildContext context) => null;
 
   @override
   Widget? buildBottomNavigation() => null;
