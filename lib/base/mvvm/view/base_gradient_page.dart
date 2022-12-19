@@ -12,7 +12,7 @@ abstract class BaseGradientPage<C> extends BaseView<C> {
   Widget? buildBottomNavigation() => null;
 
   @override
-  Widget? buildDrawer() => null;
+  Widget? buildDrawer(BuildContext context) => null;
 
   @override
   Widget? buildFloatingActionButton() => null;

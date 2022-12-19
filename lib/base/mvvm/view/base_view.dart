@@ -12,7 +12,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   AppBar? buildAppBar();
 
   /// 构建drawer
-  Widget? buildDrawer();
+  Widget? buildDrawer(BuildContext context);
 
   /// 构建bottomNavigation
   Widget? buildBottomNavigation();
@@ -52,7 +52,9 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         // appbar
         appBar: buildAppBar(),
         // draw
-        drawer: buildDrawer(),
+        drawer: Builder(
+          builder: (context) => buildDrawer(context) ?? const Offstage(),
+        ),
         // bottom
         bottomNavigationBar: buildBottomNavigation(),
         // floating action
