@@ -14,8 +14,8 @@ mixin NavigationHelper {
   }
 
   /// 关闭自己然后跳转，无法back
-  void offNavigateTo(String route) {
-    Get.offNamed(route);
+  void offNavigateTo(String route, dynamic args) {
+    Get.offNamed(route, arguments: args);
   }
 
   /// 帶頁面數據回調跳轉
