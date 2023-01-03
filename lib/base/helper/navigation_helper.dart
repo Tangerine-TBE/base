@@ -14,7 +14,7 @@ mixin NavigationHelper {
   }
 
   /// 关闭自己然后跳转，无法back
-  void offNavigateTo(String route, dynamic args) {
+  void offNavigateTo(String route, {dynamic args}) {
     Get.offNamed(route, arguments: args);
   }
 
