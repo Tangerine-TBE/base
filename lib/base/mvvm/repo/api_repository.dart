@@ -25,12 +25,19 @@ abstract class ApiRepository {
     String path, {
     Method method = Method.get,
     Map<String, dynamic> params = const {},
+    String? contentType,
     Function(dynamic data)? format,
   }) async {
+    Options? options;
+    if (contentType?.isNotEmpty == true) {
+      // contentType can using dio class <Headers> like: Headers.formUrlEncodedContentType
+      options = Options(contentType: contentType);
+    }
     var futureTask = proxy.requestOnFuture(
       path: path,
       method: method,
       params: params,
+      options: options,
       cancelToken: _globalCancelToken,
     );
 
