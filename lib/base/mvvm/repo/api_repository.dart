@@ -24,7 +24,8 @@ abstract class ApiRepository {
     // 路由
     String path, {
     Method method = Method.get,
-    Map<String, dynamic> params = const {},
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? data,
     String? contentType,
     Function(dynamic data)? format,
   }) async {
@@ -36,7 +37,8 @@ abstract class ApiRepository {
     var futureTask = proxy.requestOnFuture(
       path: path,
       method: method,
-      params: params,
+      query: params,
+      data: data,
       options: options,
       cancelToken: _globalCancelToken,
     );

@@ -144,14 +144,15 @@ abstract class DioClient {
 
   Future<Response<String>> requestOnFuture({
     required String path,
-    Map<String, dynamic>? params,
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? data,
     Options? options,
     Method method = Method.get,
     CancelToken? cancelToken,
   }) async {
     Response<String> response = await _dioRequest(
       path,
-      params: params,
+      query: query,
       options: options,
       method: method,
       cancelToken: cancelToken,
@@ -165,7 +166,8 @@ abstract class DioClient {
   ///dio--request请求
   Future<Response<String>> _dioRequest(
     String path, {
-    Map<String, dynamic>? params,
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? data,
     Options? options,
     Method method = Method.get,
     CancelToken? cancelToken,
@@ -175,7 +177,7 @@ abstract class DioClient {
       case Method.get:
         response = await _dio.get(
           path,
-          queryParameters: params,
+          queryParameters: query,
           options: options,
           cancelToken: cancelToken,
         );
@@ -183,7 +185,8 @@ abstract class DioClient {
       case Method.post:
         response = await _dio.post(
           path,
-          data: params,
+          queryParameters: query,
+          data: data,
           cancelToken: cancelToken,
           options: options,
         );
@@ -191,7 +194,8 @@ abstract class DioClient {
       case Method.put:
         response = await _dio.put(
           path,
-          data: params,
+          queryParameters: query,
+          data: data,
           options: options,
           cancelToken: cancelToken,
         );
@@ -199,7 +203,7 @@ abstract class DioClient {
       default:
         response = await _dio.get(
           path,
-          queryParameters: params,
+          queryParameters: query,
           options: options,
           cancelToken: cancelToken,
         );
