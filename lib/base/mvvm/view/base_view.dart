@@ -1,3 +1,4 @@
+import 'package:common/common/log/a_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -46,18 +47,18 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         systemNavigationBarColor: systemNavigationBarColor,
       ),
     );
-    // ios在OffStage時有蒙層，最終需要轉為null
-    Widget drawer = Builder(
-      builder: (BuildContext context) =>
-          buildDrawer(context) ?? const Offstage(),
-    );
+
     return WillPopScope(
       onWillPop: () => onBackPressed.call() ?? Future.value(true),
       child: Scaffold(
         // appbar
         appBar: buildAppBar(),
         // draw
-        drawer: drawer is! Offstage ? drawer : null,
+        drawer: buildDrawer(context) != null
+            ? Builder(
+                builder: (BuildContext context) => buildDrawer(context)!,
+              )
+            : null,
         // bottom
         bottomNavigationBar: buildBottomNavigation(),
         // floating action
