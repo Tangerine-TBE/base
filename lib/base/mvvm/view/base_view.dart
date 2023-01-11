@@ -46,15 +46,18 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         systemNavigationBarColor: systemNavigationBarColor,
       ),
     );
+    // ios在OffStage時有蒙層，最終需要轉為null
+    Widget drawer = Builder(
+      builder: (BuildContext context) =>
+          buildDrawer(context) ?? const Offstage(),
+    );
     return WillPopScope(
       onWillPop: () => onBackPressed.call() ?? Future.value(true),
       child: Scaffold(
         // appbar
         appBar: buildAppBar(),
         // draw
-        drawer: Builder(
-          builder: (context) => buildDrawer(context) ?? const Offstage(),
-        ),
+        drawer: drawer is! Offstage ? drawer : null,
         // bottom
         bottomNavigationBar: buildBottomNavigation(),
         // floating action
