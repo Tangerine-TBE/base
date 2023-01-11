@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
 
+import 'download/progress_listener.dart';
 import 'status_code.dart';
 
 // parts
@@ -139,6 +140,23 @@ abstract class DioClient {
       url,
       data: formData,
       onSendProgress: progressListener,
+    );
+  }
+
+  /// 下載
+  Future<Response<dynamic>> download(
+    String url, {
+    required String savePath,
+    Map<String, dynamic>? params,
+    CancelToken? cancelToken,
+    ProgressListener? progressListener,
+  }) async {
+    return await _dio.download(
+      url,
+      savePath,
+      queryParameters: params,
+      onReceiveProgress: progressListener,
+      cancelToken: cancelToken,
     );
   }
 
