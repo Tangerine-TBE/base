@@ -58,6 +58,13 @@ class HomePage extends BaseLauncherPage<HomePageController> {
               },
               child: const Text("Appbar Page Sample"),
             ),
+            SizedBox(height: 12.w),
+            ElevatedButton(
+              onPressed: () {
+                navigateTo(RouteName.download);
+              },
+              child: const Text("Download Page Sample"),
+            ),
           ],
         ),
       );

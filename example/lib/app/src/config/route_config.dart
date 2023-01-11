@@ -1,5 +1,8 @@
 
 import 'package:common/base/route/a_route.dart';
+import 'package:example/app/src/page3/download_controller.dart';
+import 'package:example/app/src/page3/download_page.dart';
+import 'package:example/app_base/repository/file_repo.dart';
 
 import '../../../app_base/config/route_name.dart';
 import '../page1/home_page.dart';
@@ -27,6 +30,15 @@ class RouteConfig extends ARoute {
           binding: BindingsBuilder(() {
             Get.lazyPut(() => AppBarPageController());
             Get.lazyPut(() => MenuRepo());
+          }),
+        ),
+
+        GetPage(
+          name: RouteName.download,
+          page: () => const DownloadPage(),
+          binding: BindingsBuilder(() {
+            Get.lazyPut(() => DownloadController());
+            Get.lazyPut(() => FileRepo());
           }),
         ),
       ];

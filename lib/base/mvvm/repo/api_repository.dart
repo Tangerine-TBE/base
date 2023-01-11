@@ -2,6 +2,7 @@ library api_service;
 
 import 'dart:typed_data';
 
+import 'package:common/common/network/download/progress_listener.dart';
 import 'package:dio/dio.dart';
 
 import '../../../common/network/dio_client.dart';
@@ -110,6 +111,23 @@ abstract class ApiRepository {
     return AResponse.convert<F>(
       () => futureTask,
       (data) => format?.call(data),
+    );
+  }
+
+  /// 下載
+  Future download(
+    String url, {
+    required String savePath,
+    Map<String, dynamic>? params,
+    CancelToken? cancelToken,
+    ProgressListener? progressListener,
+  }) async {
+    return proxy.download(
+      url,
+      savePath: savePath,
+      params: params,
+      cancelToken: _globalCancelToken,
+      progressListener: progressListener,
     );
   }
 
