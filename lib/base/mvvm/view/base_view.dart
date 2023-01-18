@@ -33,8 +33,11 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   /// 纯色背景
   Color get background => Get.theme.primaryColor;
 
-  /// 系统导航栏颜色
-  Color get systemNavigationBarColor => Get.theme.secondaryHeaderColor;
+  /// 底部导航栏颜色
+  Color? get bottomNavigationBarColor => null;
+
+  /// 頂部狀態欄顏色
+  Color? get statusBarColor => null;
 
   /// 返回按钮点击
   Future<bool>? onBackPressed() => null;
@@ -44,7 +47,8 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
     // bottom navigation
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: systemNavigationBarColor,
+        statusBarColor: statusBarColor,
+        systemNavigationBarColor: bottomNavigationBarColor,
       ),
     );
 
