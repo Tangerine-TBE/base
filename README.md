@@ -105,3 +105,5 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
   StartupManager(Get.context!, startupMap).start();
 });
 ```
+
+> 補充：已經集成到BaseLauncherPage
