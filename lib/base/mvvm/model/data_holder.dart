@@ -10,17 +10,15 @@ abstract class DataHolder<T> {
 
   /// api數據轉換為本地bean（list）
   List<T>? convertList(
-    dynamic map,
+    List<dynamic>? list,
     T Function(dynamic data) format,
   ) {
-    if (map is List) {
-      if (map.isEmpty) return null;
-      List<T>? list = [];
-      for (var element in map) {
-        list.add(format.call(element));
-      }
-      dataList = list;
+    if (list.isNullOrEmpty) return null;
+    List<T>? results = [];
+    for (var element in list!) {
+      results.add(format.call(element));
     }
+    dataList = results;
     return dataList;
   }
 
