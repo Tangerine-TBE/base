@@ -14,8 +14,11 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   /// 動態appbar標題
   RxString? get rxAppbarTitle => null;
 
+  /// 標題文字顏色
+  Color get appBarTitleColor => Colors.white;
+
   /// 加载appbar背景色
-  Color loadAppbarBackgroundColor() => const Color.fromARGB(255, 33, 33, 33);
+  Color get appbarBackgroundColor => const Color.fromARGB(255, 33, 33, 33);
 
   /// 左边按钮图标
   Widget? buildLeftIcon() => const Icon(Icons.arrow_back_outlined);
@@ -52,12 +55,20 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
           ? Obx(
               () => Text(
                 rxAppbarTitle?.value ?? '',
-                style: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                  fontSize: 18.w,
+                  fontWeight: FontWeight.w700,
+                  color: appBarTitleColor,
+                ),
               ),
             )
           : Text(
               appBarTitle,
-              style: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                fontSize: 18.w,
+                fontWeight: FontWeight.w700,
+                color: appBarTitleColor,
+              ),
             ),
       leading: InkWell(
         onTap: () => onTapLeft.call(),
@@ -68,7 +79,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
         ),
       ),
       leadingWidth: 100,
-      backgroundColor: loadAppbarBackgroundColor(),
+      backgroundColor: appbarBackgroundColor,
       actions: [
         Builder(
           builder: (context) => InkWell(
