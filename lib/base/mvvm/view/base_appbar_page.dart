@@ -11,6 +11,9 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   /// appbar标题
   abstract final String appBarTitle;
 
+  /// appbar shadow深度
+  double? get appBarElevation => null;
+
   /// 動態appbar標題
   RxString? get rxAppbarTitle => null;
 
@@ -51,6 +54,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
   AppBar _customAppBar() {
     return AppBar(
       centerTitle: true,
+      elevation: appBarElevation,
       title: rxAppbarTitle != null
           ? Obx(
               () => Text(
