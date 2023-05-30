@@ -11,9 +11,7 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
   String get appBarTitle => "title";
 
   @override
-  onTapLeft() {
-    return super.onTapLeft();
-  }
+  Color? get statusBarColor => Colors.cyan;
 
   @override
   onTapRight(BuildContext context) async {
@@ -22,31 +20,8 @@ class AppBarPage extends BaseAppBarPage<AppBarPageController> {
 
   @override
   Widget buildContent(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        children: [
-          const Text("自带appbar的page演示"),
-          ElevatedButton(
-            onPressed: () {
-              controller.showLoading(userInteraction: false);
-            },
-            child: const Text("测试loading"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              controller.fetchMenuStatus();
-            },
-            child: const Text("测试单个请求"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              controller.fetchMultiApis();
-            },
-            child: const Text("测试多个请求"),
-          ),
-        ],
-      ),
+    return const Center(
+      child: Text('appbar_page'),
     );
   }
 }
