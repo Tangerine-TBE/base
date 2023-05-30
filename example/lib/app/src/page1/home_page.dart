@@ -56,7 +56,14 @@ class HomePage extends BaseLauncherPage<HomePageController> {
               onPressed: () {
                 navigateTo(RouteName.appBarPage);
               },
-              child: const Text("Appbar Page Sample"),
+              child: const Text("Appbar Page Sample, color blue"),
+            ),
+            SizedBox(height: 12.w),
+            ElevatedButton(
+              onPressed: () {
+                navigateTo(RouteName.appBarPage2);
+              },
+              child: const Text("Appbar Page Sample, color amber"),
             ),
             SizedBox(height: 12.w),
             ElevatedButton(

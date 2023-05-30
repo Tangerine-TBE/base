@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,12 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
 
   /// 加载appbar背景色
   Color get appbarBackgroundColor => const Color.fromARGB(255, 33, 33, 33);
+
+  /// 底部导航栏颜色
+  Color? get bottomNavigationBarColor => null;
+
+  /// 頂部狀態欄顏色
+  Color? get statusBarColor => null;
 
   /// 左边按钮图标
   Widget? buildLeftIcon() => const Icon(Icons.arrow_back_outlined);
@@ -84,6 +91,10 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
       ),
       leadingWidth: 100,
       backgroundColor: appbarBackgroundColor,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: statusBarColor,
+        systemNavigationBarColor: bottomNavigationBarColor,
+      ),
       actions: [
         Builder(
           builder: (context) => InkWell(
