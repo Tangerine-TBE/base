@@ -33,6 +33,7 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
           child = GLoading.instance.init(context, child);
           return child;
         },
+        popGesture: true,
         getPages: route.getPages(),
         initialRoute: route.initialRoute,
         defaultTransition: Transition.rightToLeftWithFade,
