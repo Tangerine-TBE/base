@@ -28,7 +28,7 @@ abstract class ApiRepository {
     Method method = Method.get,
     Map<String, dynamic>? params,
     Options? options,
-    Function(dynamic data)? format,
+    T? Function(dynamic data)? format,
   }) async {
     var futureTask = proxy.requestOnFuture(
       path: path,
