@@ -32,19 +32,14 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   /// 纯色背景
   Color get background => Get.theme.primaryColor;
 
+  /// 是否適應鍵盤佈局
+  bool get resizeToAvoidBottomInset => false;
+
   /// 返回按钮点击
   Future<bool>? onBackPressed() => null;
 
   @override
   Widget build(BuildContext context) {
-    // bottom navigation
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   SystemUiOverlayStyle(
-    //     statusBarColor: statusBarColor,
-    //     systemNavigationBarColor: bottomNavigationBarColor,
-    //   ),
-    // );
-
     return WillPopScope(
       onWillPop: () => onBackPressed.call() ?? Future.value(true),
       child: Scaffold(
@@ -61,7 +56,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
         // floating action
         floatingActionButton: buildFloatingActionButton(),
         floatingActionButtonLocation: floatingActionButtonLocation,
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         body: Builder(
           builder: (context) => buildBody(context),
         ),
