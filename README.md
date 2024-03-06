@@ -6,12 +6,6 @@ Flutter项目基础架构
 
 ### 引入
 
-```yaml
-common:
-  git:
-    url: http://app.support:Appsupport2020@gitlab.boardware.com/flutter-framework/base.git
-    ref: v2.x.x
-```
 
 ## 目录说明
 
