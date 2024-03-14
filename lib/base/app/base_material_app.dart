@@ -11,11 +11,10 @@ import '../route/a_route.dart';
 // ignore: must_be_immutable
 abstract class BaseMaterialApp<T extends ALauncherStrategy>
     extends StatelessWidget {
-  BaseMaterialApp(
-    this.launcherStrategy,
-    this.route, {
-    Key? key,
-  }) : super(key: key) {
+  BaseMaterialApp(this.launcherStrategy,
+      this.route, {
+        Key? key,
+      }) : super(key: key) {
     init();
   }
 
@@ -62,6 +61,9 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
       //设计图尺寸
       // designSize: Size(
       //     GeneralConstant.DESIGN_WIDTH, GeneralConstant.DESIGN_HEIGHT,));
+      designSize: Size(
+          375, 812
+      ),
     );
     return widget!;
   }
