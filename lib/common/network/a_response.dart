@@ -67,22 +67,22 @@ class AResponse<T> {
 
   /// 處理ResponseBean的map數據
   static AResponse<T> handleDioResponse<T>(
-    Response<String> dioResponse,
-    T? Function(dynamic data)? onResponse,
-  ) {
+      Response<String> dioResponse,
+      T? Function(dynamic data)? onResponse,
+      ) {
     Map<String, dynamic> map = jsonDecode(dioResponse.data!);
-    var code = map["code"] ?? dioResponse.statusCode;
-    var message = map["message"] ?? map["msg"] ?? dioResponse.statusMessage;
-    var data = map["data"] ?? map; // data 可能是List 或 Object 或 基本數據類型（bool）
+    var status = map["status"] ?? dioResponse.statusCode;
+    var code = map["code"] ?? dioResponse.statusMessage;
+    var result = map["result"] ?? map; // data 可能是List 或 Object 或 基本數據類型（bool）
     logger.w(
         ("---> header status code: ${dioResponse.statusCode}, message: ${dioResponse.statusMessage}"));
     logger.i("---> response: code[$code], || "
-        "msg:[$message] || ,\n "
-        "${const JsonEncoder.withIndent('  ').convert(data)}");
+        "msg:[$code] || ,\n "
+        "${const JsonEncoder.withIndent('  ').convert(result)}");
     return AResponse(
-      onResponse?.call(data),
-      code: code,
-      message: message,
+      onResponse?.call(result),
+      code: status,
+      message: code,
     );
   }
 }
