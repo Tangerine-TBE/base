@@ -13,7 +13,7 @@ dependencies:
   get_storage: ^2.1.1 # 本地存储
   flutter_easyloading: ^3.0.5 # loading效果
   flutter_screenutil: ^5.5.4 #适配方案
-  image_picker: ^0.8.6 # 图片选中库
+  image_picker: ^1.0.7 # 图片选中库
   intl: ^0.17.0 # 时间DateFormat
   package_info_plus: ^3.0.1 # 包信息
   getwidget: ^3.0.1 # UI Kit library built with Flutter SDK
