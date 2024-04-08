@@ -1,6 +1,5 @@
 import 'package:common/base/mvvm/repo/dio_proxy.dart';
-import 'package:dio/src/interceptor.dart';
-
+import 'package:dio/dio.dart';
 import '../config/build_config.dart';
 import 'sign_interceptor.dart';
 

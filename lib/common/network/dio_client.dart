@@ -4,10 +4,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:common/common/top.dart';
-import 'package:dio/adapter.dart';
 
 // import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
 
@@ -39,7 +39,7 @@ abstract class DioClient {
       ..addAll(config.interceptors ?? []);
     // SSL证书
     HttpClientAdapter httpClientAdapter = _dio.httpClientAdapter;
-    if (httpClientAdapter is DefaultHttpClientAdapter) {
+    if (httpClientAdapter is IOHttpClientAdapter) {
       // 1. pem string
       if (!config.pem.isNullOrEmpty) {
         httpClientAdapter.onHttpClientCreate = (client) {
