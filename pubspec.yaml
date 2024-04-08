@@ -24,7 +24,7 @@ dependencies:
 
   ## ---- network ----
   dio: ^5.2.1 # 网络请求
-  crypto: 3.0.1  #MD5
+  crypto: ^3.0.3  #MD5
 
 dev_dependencies:
   flutter_test:
