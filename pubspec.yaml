@@ -23,7 +23,7 @@ dependencies:
   logger: 1.1.0
 
   ## ---- network ----
-  dio: 4.0.0 # 网络请求
+  dio: ^5.2.1 # 网络请求
   crypto: 3.0.1  #MD5
 
 dev_dependencies:
