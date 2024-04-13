@@ -1,6 +1,5 @@
 import 'package:common/common/widget/loading/g_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/launcher/a_launcher_strategy.dart';
@@ -25,7 +24,7 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
   late ARoute route;
 
   /// material app
-  GetMaterialApp buildApp(BuildContext context, Widget? child) =>
+  GetMaterialApp buildApp(BuildContext context) =>
       GetMaterialApp(
         builder: (context, child) {
           // 安装loading
@@ -56,15 +55,8 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
 
   @override
   Widget build(BuildContext context) {
-    widget ??= ScreenUtilInit(
-      builder: (context, child) => buildApp(context, child),
-      //设计图尺寸
-      // designSize: Size(
-      //     GeneralConstant.DESIGN_WIDTH, GeneralConstant.DESIGN_HEIGHT,));
-      designSize: Size(
-          375, 812
-      ),
-    );
+    widget ??=buildApp(context);
+
     return widget!;
   }
 }

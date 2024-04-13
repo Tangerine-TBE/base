@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'stateful_check_box.dart';
 
@@ -49,8 +48,8 @@ class _StatefulCheckboxGroupState extends State<StatefulCheckboxGroup> {
   Widget build(BuildContext context) {
     return Center(
       child: Wrap(
-        spacing: widget.spacing.w,
-        runSpacing: widget.runSpacing.w,
+        spacing: widget.spacing.toDouble(),
+        runSpacing: widget.runSpacing.toDouble(),
         children: _buildCheckboxes(),
       ),
     );

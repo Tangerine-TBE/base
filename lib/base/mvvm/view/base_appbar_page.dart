@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'base_view.dart';
@@ -67,7 +66,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
               () => Text(
                 rxAppbarTitle?.value ?? '',
                 style: TextStyle(
-                  fontSize: 18.w,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: appBarTitleColor,
                 ),
@@ -76,7 +75,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
           : Text(
               appBarTitle,
               style: TextStyle(
-                fontSize: 18.w,
+                fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: appBarTitleColor,
               ),
@@ -84,7 +83,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
       leading: InkWell(
         onTap: () => onTapLeft.call(),
         child: Container(
-          padding: EdgeInsets.only(left: 12.w),
+          padding: EdgeInsets.only(left: 12),
           alignment: Alignment.centerLeft,
           child: buildLeftIcon(),
         ),
@@ -100,7 +99,7 @@ abstract class BaseAppBarPage<C> extends BaseView<C> {
           builder: (context) => InkWell(
             onTap: () => onTapRight.call(context),
             child: Container(
-              padding: EdgeInsets.only(right: 12.w, left: 12.w),
+              padding: EdgeInsets.only(right: 12, left: 12),
               alignment: Alignment.centerRight,
               child: buildRightIcon(),
             ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../../app_base/config/route_name.dart';
 import '../config/startup_config.dart';
 import 'home_page_controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends BaseLauncherPage<HomePageController> {
   HomePage({super.key});
@@ -41,8 +40,8 @@ class HomePage extends BaseLauncherPage<HomePageController> {
         currentIndex: 0,
         unselectedItemColor: Colors.black,
         selectedItemColor: Colors.black,
-        unselectedLabelStyle: TextStyle(fontSize: 11.w),
-        selectedLabelStyle: TextStyle(fontSize: 12.w, fontWeight: FontWeight.w600),
+        unselectedLabelStyle: TextStyle(fontSize: 11),
+        selectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
         onTap: (index) => showToast("$index"),
       );
 
@@ -58,14 +57,14 @@ class HomePage extends BaseLauncherPage<HomePageController> {
               },
               child: const Text("Appbar Page Sample, color blue"),
             ),
-            SizedBox(height: 12.w),
+            SizedBox(height: 12),
             ElevatedButton(
               onPressed: () {
                 navigateTo(RouteName.appBarPage2);
               },
               child: const Text("Appbar Page Sample, color amber"),
             ),
-            SizedBox(height: 12.w),
+            SizedBox(height: 12),
             ElevatedButton(
               onPressed: () {
                 navigateTo(RouteName.download);

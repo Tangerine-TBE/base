@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 自带状态的checkbox
 // ignore: must_be_immutable
@@ -50,8 +49,8 @@ class _StatefulCheckboxState extends State<StatefulCheckbox> {
         /// checkbox
         Container(
           margin: const EdgeInsets.all(2),
-          width: widget.size.w,
-          height: widget.size.w,
+          width: widget.size.toDouble(),
+          height: widget.size.toDouble(),
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -73,7 +72,7 @@ class _StatefulCheckboxState extends State<StatefulCheckbox> {
           ),
         ),
 
-        SizedBox(width: 4.w),
+        SizedBox(width: 4.toDouble()),
 
         /// text
         InkWell(
@@ -85,7 +84,7 @@ class _StatefulCheckboxState extends State<StatefulCheckbox> {
             widget.text ?? "",
             style: TextStyle(
               fontFamily: 'GenSen',
-              fontSize: widget.fontSize.w,
+              fontSize: widget.fontSize.toDouble(),
               fontWeight: FontWeight.w400,
               color: const Color(0xFFDFDFDF),
             ),

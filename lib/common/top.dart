@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
@@ -39,14 +38,14 @@ Future<bool?> showConfirmCancelDialog(
       title: Text(
         title ?? "标题",
         style: TextStyle(
-          fontSize: 14.w,
+          fontSize: 14,
           color: Theme.of(context).primaryColor,
         ),
       ),
       content: Text(
         content ?? "内容？",
         style: TextStyle(
-          fontSize: 14.w,
+          fontSize: 14,
           color: Theme.of(context).primaryColor,
         ),
       ),

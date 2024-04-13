@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 不带边框的输入框
 class NoBorderTextField extends StatelessWidget {
@@ -42,7 +41,7 @@ class NoBorderTextField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.white38,
-          fontSize: 14.w,
+          fontSize: 14,
         ),
         border: InputBorder.none,
         // enabledBorder: const OutlineInputBorder(
@@ -55,14 +54,14 @@ class NoBorderTextField extends StatelessWidget {
       ),
       // 光标
       cursorColor: Colors.white38,
-      cursorWidth: 1.w,
-      cursorHeight: 14.w,
+      cursorWidth: 1,
+      cursorHeight: 14,
       // 输入类型
       keyboardType: TextInputType.number,
       // 小键盘按钮
       // textInputAction: TextInputAction.search,
       style: TextStyle(
-        fontSize: 14.w,
+        fontSize: 14,
         color: Colors.white,
       ),
     );
