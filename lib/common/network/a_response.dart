@@ -58,6 +58,8 @@ class AResponse<T> {
             code = timeOut;
             msg = "網絡異常";
             break;
+          default:
+            break;
         }
         return AResponse(null, code: code, message: msg);
       }
@@ -67,9 +69,9 @@ class AResponse<T> {
 
   /// 處理ResponseBean的map數據
   static AResponse<T> handleDioResponse<T>(
-      Response<String> dioResponse,
-      T? Function(dynamic data)? onResponse,
-      ) {
+    Response<String> dioResponse,
+    T? Function(dynamic data)? onResponse,
+  ) {
     Map<String, dynamic> map = jsonDecode(dioResponse.data!);
     var status = map["status"] ?? dioResponse.statusCode;
     var code = map["code"] ?? dioResponse.statusMessage;
