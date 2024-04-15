@@ -19,7 +19,7 @@ dependencies:
   pull_to_refresh: 2.0.0 # 上拉加载下拉刷新
 
   ## ---- log ----
-  logger: 1.1.0
+  logger: ^2.0.2
 
   ## ---- network ----
   dio: ^5.2.1 # 网络请求
