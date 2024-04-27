@@ -40,8 +40,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => onBackPressed.call() ?? Future.value(true),
+    return PopScope(
       child: Scaffold(
         // appbar
         appBar: buildAppBar(),
