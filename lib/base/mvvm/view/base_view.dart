@@ -22,6 +22,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
 
   /// floatingActionButton位置
   FloatingActionButtonLocation? get floatingActionButtonLocation;
+  bool get  canPopBack => true;
 
   /// 主视图区域
   Widget buildContent(BuildContext context);
@@ -41,6 +42,7 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   @override
   Widget build(BuildContext context) {
     return PopScope(
+      canPop: canPopBack,
       child: Scaffold(
         // appbar
         appBar: buildAppBar(),
