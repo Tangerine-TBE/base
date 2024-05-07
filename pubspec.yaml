@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   ## ---- common ----
-  get: ^4.6.5
+  get: ^4.6.6
   get_storage: ^2.1.1 # 本地存储
   flutter_easyloading: ^3.0.5 # loading效果
   image_picker: ^1.0.7 # 图片选中库
