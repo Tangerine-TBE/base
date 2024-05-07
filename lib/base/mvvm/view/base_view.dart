@@ -43,39 +43,11 @@ abstract class BaseView<C> extends GetView<C> with NavigationHelper {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: canPopBack,
-      child: Scaffold(
-        // appbar
-        appBar: buildAppBar(),
-        // draw
-        drawer: buildDrawer(context) != null
-            ? Builder(
-                builder: (BuildContext context) => buildDrawer(context)!,
-              )
-            : null,
-        // bottom
-        bottomNavigationBar: buildBottomNavigation(),
-        // floating action
-        floatingActionButton: buildFloatingActionButton(),
-        floatingActionButtonLocation: floatingActionButtonLocation,
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-        body: Builder(
-          builder: (context) => buildBody(context),
-        ),
-      ),
+      child: buildBody(context),
     );
   }
 
   Widget buildBody(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: background,
-        ),
-        buildContent(context),
-        buildContentCover(context),
-      ],
-    );
+    return buildContent(context);
   }
 }
