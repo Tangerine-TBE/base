@@ -32,9 +32,10 @@ class AResponse<T> {
       );
     } catch (error) {
       logger.e("---- Response.convert() ====> catch request error: $error");
-      if (error is DioError) {
+      if (error is DioException) {
         int code = 0;
         String msg = "";
+
         switch (error.type) {
           case DioExceptionType.cancel:
             msg = "請求取消";
@@ -52,6 +53,14 @@ class AResponse<T> {
             msg = "響應超時";
             break;
           case DioExceptionType.badResponse:
+            if (error.response != null) {
+              String? data = error.response!.data;
+              if (data != null && data.isNotEmpty) {
+                Map<String, dynamic> map = jsonDecode(error.response!.data!);
+                msg = map['message'] ?? '響應报文异常';
+                break;
+              }
+            }
             msg = "響應报文异常";
             break;
           case DioExceptionType.unknown:
