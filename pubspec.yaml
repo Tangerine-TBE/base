@@ -9,23 +9,18 @@ dependencies:
   flutter:
     sdk: flutter
   ## ---- common ----
-  get: ^4.6.5
-  get_storage: ^2.1.1 # 本地存储
-  flutter_easyloading: ^3.0.5 # loading效果
-  flutter_screenutil: ^5.5.4 #适配方案
-  image_picker: ^0.8.6 # 图片选中库
-  intl: ^0.17.0 # 时间DateFormat
-  package_info_plus: ^3.0.1 # 包信息
-  getwidget: ^3.0.1 # UI Kit library built with Flutter SDK
-  pull_to_refresh: 2.0.0 # 上拉加载下拉刷新
-
+  provider: ^6.1.2
+  flutter_easyloading: ^3.0.5
+  flutter_screenutil: ^5.9.3
+  intl: ^0.20.1
+  package_info_plus: ^8.1.2
   ## ---- log ----
-  logger: 1.1.0
-
+  logger: ^2.5.0
+  go_router: ^14.6.2
   ## ---- network ----
-  dio: 4.0.0 # 网络请求
-  crypto: 3.0.1  #MD5
-
+  dio: ^5.7.0
+  crypto: ^3.0.6
+  shared_preferences: ^2.3.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,8 +1,8 @@
+import 'package:example/app/src/app.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'launcher/strategy/base_sample_launcher_strategy.dart';
 import 'src/config/route_config.dart';
-import 'src/my_app.dart';
 
 /// app启动器
 class AppLauncher {
@@ -10,7 +10,7 @@ class AppLauncher {
   static void launch(
     BaseSampleLauncherStrategy launcherStrategy,
   ) {
-    runApp(MyApp(
+    runApp(App(
       launcherStrategy: launcherStrategy,
       route: RouteConfig(),
     ));

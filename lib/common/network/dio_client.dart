@@ -4,10 +4,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:common/common/top.dart';
-import 'package:dio/adapter.dart';
 
 // import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
 
@@ -39,18 +39,20 @@ abstract class DioClient {
       ..addAll(config.interceptors ?? []);
     // SSL证书
     HttpClientAdapter httpClientAdapter = _dio.httpClientAdapter;
-    if (httpClientAdapter is DefaultHttpClientAdapter) {
+    if (httpClientAdapter is IOHttpClientAdapter) {
       // 1. pem string
       if (!config.pem.isNullOrEmpty) {
-        httpClientAdapter.onHttpClientCreate = (client) {
+        httpClientAdapter.createHttpClient = () {
+          var client = HttpClient();
           client.badCertificateCallback =
               (X509Certificate cert, String host, int port) =>
                   cert.pem == config.pem.val;
           //代理
           _appendProxy(client);
+          return client;
         };
       } else if (!config.pemFilepath.isNullOrEmpty) {
-        httpClientAdapter.onHttpClientCreate = (client) {
+        httpClientAdapter.createHttpClient = () {
           // 2. pem file
           SecurityContext sc = SecurityContext();
           // file is the path of certificate
@@ -61,18 +63,18 @@ abstract class DioClient {
           return httpClient;
         };
       } else {
-        httpClientAdapter.onHttpClientCreate = (client) {
+        httpClientAdapter.createHttpClient = () {
           // 3. no verification
+          var client = HttpClient();
           client.badCertificateCallback =
               (X509Certificate cert, String host, int port) => true;
           // 代理
           _appendProxy(client);
+          return client;
         };
       }
     }
-    // else if (httpClientAdapter is BrowserHttpClientAdapter) {
-    //   // TODO 浏览器adapter
-    // }
+
   }
 
   _appendProxy(HttpClient httpClient) {

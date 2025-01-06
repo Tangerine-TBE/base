@@ -1,5 +1,7 @@
-import 'package:get/get_utils/src/get_utils/get_utils.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:common/base/app/base_material_app.dart';
+import 'package:common/common/get_utils/src/get_utils/get_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 extension NullStringExt on String? {
   String get val => isNullOrEmpty ? '' : this!;
@@ -9,9 +11,21 @@ extension NullStringExt on String? {
 
 extension StringExt on String {
   // this 作為key，去storage中讀寫值
-  save(dynamic value) => GetStorage().write(this, value);
+  save(dynamic value) async {
+    if (value is String) {
+      perference?.setString(this, value);
+    } else if (value is double) {
+      perference?.setDouble(this, value);
+    } else if (value is int) {
+      perference?.setInt(this, value);
+    } else if (value is bool) {
+      perference?.setBool(this, value);
+    } else {
+      throw FlutterError('the type must be int,double,bool or String');
+    }
+  }
 
-  get read => GetStorage().read(this);
+  get read => perference?.get(this);
 }
 
 extension NullNumExt on num? {

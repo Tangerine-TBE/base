@@ -1,13 +1,16 @@
 import 'package:common/common/widget/loading/g_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/launcher/a_launcher_strategy.dart';
 import '../../common/log/a_logger.dart';
 import '../route/a_route.dart';
 
 /// 封装通用app，给客户端项目继承
+
+SharedPreferences? perference;
+
 // ignore: must_be_immutable
 abstract class BaseMaterialApp<T extends ALauncherStrategy>
     extends StatelessWidget {
@@ -26,19 +29,13 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
   late ARoute route;
 
   /// material app
-  GetMaterialApp buildApp(BuildContext context, Widget? child) =>
-      GetMaterialApp(
+  MaterialApp buildApp(BuildContext context, Widget? child) => MaterialApp(
         builder: (context, child) {
           // 安装loading
           child = GLoading.instance.init(context, child);
           return child;
         },
-        popGesture: true,
-        getPages: route.getPages(),
-        initialRoute: route.initialRoute,
-        defaultTransition: Transition.rightToLeftWithFade,
       );
-
 
   /// 环境变量配置交给客户端处理
   void buildConfig(T launcherStrategy);
@@ -49,6 +46,7 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
     // 安装默认logger
     installLogger(launcherStrategy.isDebug);
 
+    installStander();
     // 构建环境变量
     buildConfig(launcherStrategy);
   }
@@ -64,5 +62,9 @@ abstract class BaseMaterialApp<T extends ALauncherStrategy>
       //     GeneralConstant.DESIGN_WIDTH, GeneralConstant.DESIGN_HEIGHT,));
     );
     return widget!;
+  }
+
+  installStander() async {
+    perference = await SharedPreferences.getInstance();
   }
 }

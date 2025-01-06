@@ -1,8 +1,7 @@
 import 'package:common/base/mvvm/repo/dio_proxy.dart';
-import 'package:dio/src/interceptor.dart';
+import 'package:dio/src/dio_mixin.dart';
 
 import '../config/build_config.dart';
-import 'sign_interceptor.dart';
 
 /// 举例如何实现DioClient
 /// 主要关注host、代理、header、拦截器的注入
@@ -38,7 +37,8 @@ class SampleDioProxy extends DioProxy {
       };
 
   @override
-  List<Interceptor> loadInterceptors() => [
-    SignInterceptor(),
-  ];
+  List<Interceptor> loadInterceptors() {
+    return[];
+  }
+
 }

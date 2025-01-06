@@ -15,19 +15,19 @@ class PrivacyTask extends FlutterStartup {
   Future<bool> create(BuildContext context) async {
     logW('start up $key');
 
-    // 模拟隐私协议对话框
-    bool? result = await showConfirmCancelDialog(
-      context,
-      title: '注意',
-      content: '请同意隐私协议以进行软件sdk初始化',
-      shouldCloseOnConfirm: () async {
-        return true;
-      },
-      onConfirm: () {
-        logV("对话框关闭");
-      },
-    );
+    // // 模拟隐私协议对话框
+    // bool? result = await showConfirmCancelDialog(
+    //   context,
+    //   title: '注意',
+    //   content: '请同意隐私协议以进行软件sdk初始化',
+    //   shouldCloseOnConfirm: () async {
+    //     return true;
+    //   },
+    //   onConfirm: () {
+    //     logV("对话框关闭");
+    //   },
+    // );
 
-    return result ?? false;
+    return false;
   }
 }

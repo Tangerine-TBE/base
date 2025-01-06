@@ -1,15 +1,14 @@
 import 'package:common/common/widget/loading/g_loading.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import '../../../common/log/a_logger.dart';
 import '../../../common/network/dio_client.dart';
 import '../../../common/network/status_code.dart';
-import '../../helper/navigation_helper.dart';
 import '../repo/api_repository.dart';
 
 /// Controller基類
 /// BaseVM
-abstract class BaseViewModel extends SuperController with NavigationHelper {
+abstract class BaseViewModel extends ChangeNotifier {
   /// 頁面狀態 - loading
   void showLoading({bool userInteraction = true}) =>
       GLoading.instance.showLoading(userInteraction);
@@ -33,17 +32,10 @@ abstract class BaseViewModel extends SuperController with NavigationHelper {
   void dismiss() => GLoading.instance.dismiss();
 
   /// 生命週期 - onInit
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  void onInit() {}
 
   /// 生命週期 - onClose
-  @override
-  void onClose() {
-    dismiss();
-    super.onClose();
-  }
+  void onClose() {}
 
   /// 執行future
   Future<T?> apiLaunch<T>(
