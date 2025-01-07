@@ -36,27 +36,39 @@ class AResponse<T> {
         int code = 0;
         String msg = "";
         switch (error.type) {
-          case DioErrorType.cancel:
+          case DioExceptionType.cancel:
+            code = clientError;
             msg = "請求取消";
             break;
-          case DioErrorType.connectionTimeout:
+          case DioExceptionType.connectionTimeout:
             code = timeOut;
             msg = "連接超時";
             break;
-          case DioErrorType.sendTimeout:
+          case DioExceptionType.sendTimeout:
             code = timeOut;
             msg = "請求超時";
             break;
-          case DioErrorType.receiveTimeout:
+          case DioExceptionType.receiveTimeout:
             code = timeOut;
-            msg = "響應超時";
+            msg = "响应超时";
             break;
-          case DioErrorType.badResponse:
+          case DioExceptionType.badCertificate:
+            code = timeOut;
+            msg = "验证失败";
+            break;
+          case DioExceptionType.badResponse:
+            code = serverError;
             msg = "響應报文异常";
             break;
-          case DioErrorType.unknown:
+          case DioExceptionType.unknown:
             code = timeOut;
             msg = "網絡異常";
+            break;
+          case DioExceptionType.connectionError:
+            code = timeOut;
+            msg ="连接错误";
+            break;
+          default:
             break;
         }
         return AResponse(null, code: code, message: msg);
