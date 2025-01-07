@@ -32,7 +32,7 @@ class AResponse<T> {
       );
     } catch (error) {
       logger.e("---- Response.convert() ====> catch request error: $error");
-      if (error is DioError) {
+      if (error is DioException) {
         int code = 0;
         String msg = "";
         switch (error.type) {
