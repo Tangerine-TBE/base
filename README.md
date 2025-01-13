@@ -17,3 +17,12 @@ Flutter项目基础架构
 ## mvvm.vm
   1.base_view_model.dart 管理所有的视图动作，管理所有的数据层操作 系视图与数据的交互介质
 
+# example 
+  1.dev 为示例入口 ，其启动策略与DevLauncherStrategy.dart有关
+  2.app_launcher.dart 为策略后的启动项 ，主要为配置多语言，主题 和路由。
+  3.rout_config.dart 其初始化在App_launcher 内含 initRouter loginRouter . 其中initRouter 为初始化路由 loginRouter为登录路由。
+    一般需要在入口处判断当前Application的状态进而对login 或 init 的路由进行初始化
+  ## http 基础的网络访问，可自由定义。
+
+  
+
