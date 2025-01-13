@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends BaseViewPage<HomePageController> {
-  const HomePage({super.key});
+  const HomePage({super.key,required super.controller});
 
   @override
   Widget buildContent(BuildContext context ,HomePageController controller) {

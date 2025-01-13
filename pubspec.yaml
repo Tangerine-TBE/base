@@ -20,7 +20,7 @@ dependencies:
   ## ---- network ----
   dio: ^5.7.0
   crypto: ^3.0.6
-  shared_preferences: ^2.3.5
+  shared_preferences: ^2.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

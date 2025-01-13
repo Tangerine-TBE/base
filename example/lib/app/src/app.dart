@@ -38,9 +38,9 @@ class App extends BaseMaterialApp<BaseSampleLauncherStrategy> {
     BuildConfig.proxyPort = proxyPort;
   }
 
-@override
-MaterialApp buildApp(BuildContext context, Widget? child) =>
-    MaterialApp.router(
-      routerConfig: route.getPages(),
-    );
+  @override
+  MaterialApp buildApp(BuildContext context, Widget? child) =>
+      MaterialApp.router(
+        routerConfig: route.getPages(),
+      );
 }
