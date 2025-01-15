@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../app_base/config/build_config.dart';
 import '../../app_base/config/user.dart';
 import '../launcher/strategy/base_sample_launcher_strategy.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 /// app
 // ignore: must_be_immutable
@@ -42,5 +43,6 @@ class App extends BaseMaterialApp<BaseSampleLauncherStrategy> {
   MaterialApp buildApp(BuildContext context, Widget? child) =>
       MaterialApp.router(
         routerConfig: route.getPages(),
+        builder: EasyLoading.init(),
       );
 }
